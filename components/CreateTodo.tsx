@@ -29,8 +29,8 @@ const CreateEvent = () => {
         }
     } = actions
 
-    const visible = select("task.TaskModalTable");
-    const setIsOpen = () => setTask('TaskModalTable', !visible)
+    const visible = select("task.taskModalTable");
+    const setIsOpen = () => setTask('taskModalTable', !visible)
 
     const handleAddTodo = (task: TaskItem) => {
         console.log("Nova tarefa:", task);

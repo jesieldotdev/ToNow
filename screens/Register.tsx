@@ -24,8 +24,7 @@ const RegisterScreen = ({ navigation }: any) => {
 
     function handleLogin() {
 
-        setSetting('showTabBar', true)
-        navigation.navigate("Home")
+        navigation.navigate("Login")
     }
 
     return (
