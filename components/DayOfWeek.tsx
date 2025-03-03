@@ -1,31 +1,46 @@
 import { View, TouchableOpacity } from "react-native";
-import { useState } from "react";
 import CustomText from "./CustomText";
 
-export const DayOfWeek = () => {
-    const [selectedDay, setSelectedDay] = useState<string>("Sat"); 
-    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+interface Day {
+    value: number;  
+    label: string;  
+    dayNumber: number; // Agora garantimos que ele representa corretamente o número do dia do mês
+}
 
+interface DayOfWeekProps {
+    days: Day[];
+    selectedDay: number;
+    setSelectedDay: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export const DayOfWeek = ({ days, selectedDay, setSelectedDay }: DayOfWeekProps) => {
     return (
         <View className="flex-row justify-between items-center mb-4 pb-2">
-            {days.map((day, index) => (
-                <TouchableOpacity key={index} onPress={() => setSelectedDay(day)}>
+            {days.map((day) => (
+                <TouchableOpacity 
+                    key={day.value} 
+                    onPress={() => setSelectedDay(day.dayNumber)} // Corrigido para usar o número do dia real
+                    accessibilityLabel={`Select ${day.label}`}
+                >
                     <View className="items-center">
+                        {/* Nome do dia */}
                         <CustomText
-                            variant={selectedDay === day ? "bold" : "medium"}
-                            className={`text-lg ${selectedDay === day ? "text-blue-500" : "text-gray-500"}`}
+                            variant={selectedDay === day.dayNumber ? "bold" : "medium"} // Comparação corrigida
+                            className={`text-lg ${selectedDay === day.dayNumber ? "text-blue-500" : "text-gray-500"}`}
                         >
-                            {day}
+                            {day.label}
                         </CustomText>
 
+                        {/* Número do dia */}
                         <CustomText
-                            variant={selectedDay === day ? "bold" : "medium"}
-                            className={`text-lg ${selectedDay === day ? "text-blue-500" : "text-gray-500"}`}
+                            variant={selectedDay === day.dayNumber ? "bold" : "medium"} // Comparação corrigida
+                            className={`text-lg ${selectedDay === day.dayNumber ? "text-blue-500" : "text-gray-500"}`}
                         >
-                            {index + 4}
+                            {day.dayNumber}
                         </CustomText>
 
-                        {selectedDay === day && <View className="w-1 h-1 bg-blue-500 rounded-full" />}
+                        {/* Indicador do dia selecionado */}
+                        {selectedDay === day.dayNumber && <View className="w-1 h-1 bg-blue-500 rounded-full mt-1" />}
                     </View>
                 </TouchableOpacity>
             ))}
