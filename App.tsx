@@ -7,6 +7,7 @@ import { useState } from "react";
 import CreateTodo from "components/CreateTodo";
 import Store from "./store";
 import useStore from "hooks/useStore";
+import { sortTasks } from "store/task/utils";
 
 export default function App() {
   return (
@@ -40,7 +41,7 @@ function AppContent() {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#F9FAFB" }}>
-      <Schedule tasks={tasks} />
+      <Schedule tasks={sortTasks(tasks)} />
       <TabBar handleAdd={handleAdd} />
       <StatusBar style="light" />
       <CreateTodo
