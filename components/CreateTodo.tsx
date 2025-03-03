@@ -56,7 +56,7 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
         if (title.trim().length > 0) {
             handleAdd({
                 title,
-                description: "",
+                description,
                 time: {
                     hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     date: {

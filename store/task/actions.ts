@@ -1,29 +1,29 @@
 import { AxiosResponse } from "axios";
-import { setEvent as setEventEvent } from "./reducer";
+import { setTask as setTaskTask } from "./reducer";
 import { stringify } from "querystring";
 
 interface Response {
   message: string;
-  tasks: EventItem[]
+  tasks: TaskItem[]
 }
 
-export const setEvent =
+export const setTask =
   (...[, , , dispatch]: any) =>
-    <T extends FlattenKeys<EventState>>(
+    <T extends FlattenKeys<TaskState>>(
       field: T,
-      value: DeepType<EventState, T>
+      value: DeepType<TaskState, T>
     ): void =>
-      dispatch(setEventEvent(field, value));
+      dispatch(setTaskTask(field, value));
 
 
-export const setEventItem =
+export const setTaskItem =
   (getState: () => RootState, actions: ActionsType) =>
-    <T extends FlattenKeys<EventItem>>(
+    <T extends FlattenKeys<TaskItem>>(
       field: T,
-      value: DeepType<EventItem, T>
+      value: DeepType<TaskItem, T>
     ): void => {
       const {
-        task: { setEvent },
+        task: { setTask },
       } = actions;
       const state = getState();
 
@@ -31,13 +31,13 @@ export const setEventItem =
       const selectedItem = state.task.items[selectedCartItemIndex];
       if (!selectedItem) return;
 
-      setEvent(`items.${selectedCartItemIndex}.${field}`, value as any);
+      setTask(`items.${selectedCartItemIndex}.${field}`, value as any);
     };
 
 
-export const getEvents =
+export const getTasks =
   (_getState: () => RootState, actions: ActionsType) =>
-    (searchFilter?: SearchFilter<EventItem>) =>
+    (searchFilter?: SearchFilter<TaskItem>) =>
       new Promise<AxiosResponse<Response>>((resolve, reject) => {
         const {
           request: { GET },
@@ -46,29 +46,41 @@ export const getEvents =
           <Response>("tasks")
           .then(resolve)
           .catch((error) => {
-            console.error("Error in getEvents:", error);
+            console.error("Error in getTasks:", error);
             reject(error);
           });
       });
 
-export const filterEvents =
+export const filterTasks =
   (getState: () => RootState, actions: ActionsType) => () =>
     new Promise<Response>((resolve, reject) => {
       const {
-        task: { getEvents, setEvent },
+        task: { getTasks, setTask },
       } = actions;
       const state = getState();
       const searchFilter = state.task.filter.task.filter;
 
 
-      getEvents(searchFilter)
+      getTasks(searchFilter)
         .then(({ data }) => {
-          setEvent("items", data.tasks);
+          setTask("items", data.tasks);
           resolve(data);
         })
         .catch((error) => {
-          console.error("Error in filterEvents:", error);
+          console.error("Error in filterTasks:", error);
           reject(error);
         });
     });
 
+export const addTaskItem =
+  (getState: () => RootState, actions: ActionsType) =>
+    (newTask: TaskItem): void => {
+      const {
+        task: { setTask },
+      } = actions;
+
+      const state = getState();
+      const currentTasks = state.task.items || []; // Garante que o array existe
+
+      setTask("items", [...currentTasks, newTask]); // Adiciona a nova tarefa ao array
+    };

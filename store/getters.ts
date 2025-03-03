@@ -1,5 +1,5 @@
-import * as event from './event/getters'
+import * as task from './task/getters'
 
-const getters = {event}
+const getters = {task}
 
 export default getters

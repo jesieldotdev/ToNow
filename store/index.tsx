@@ -5,7 +5,7 @@ import { getPersistConfig } from "redux-deep-persist";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import event from "./event/reducer";
+import task from "./task/reducer";
 import actions from "./actions";
 import getters from "./getters";
 
@@ -16,7 +16,7 @@ declare global {
 }
 
 const reducer = combineReducers({
-  event,
+  task,
 });
 
 const persistConfig = getPersistConfig({

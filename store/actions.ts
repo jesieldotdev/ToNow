@@ -1,6 +1,6 @@
-import * as event from './event/actions'
+import * as task from './task/actions'
 import * as request from './request/actions'
 
-const actions = {event, request}
+const actions = {task, request}
 
 export default actions

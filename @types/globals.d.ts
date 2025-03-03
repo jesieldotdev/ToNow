@@ -97,10 +97,3 @@ interface Time {
   date: DateInfo;
 }
 
-type TaskItem = {
-    time: Time;
-    title: string;
-    description: string;
-    participants?: string[] | undefined;
-    color: {primary: string; secondary: string}
-}

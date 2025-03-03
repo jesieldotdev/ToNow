@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
+
 import { useSelector, useDispatch } from "react-redux";
 import { modules } from "../store";
 import { createSelector } from "@reduxjs/toolkit";
@@ -9,10 +9,10 @@ type ImportReturnType<T extends Record<string, (...args: any) => any>> = {
 };
 
 type ImportsReturnType<
-  T extends Record<string, Record<string, (...args: any) => any>>
+  T extends Record<string, Record<string, (...args: any) => any>> 
 > = {
     [K in keyof T]: ImportReturnType<T[K]>;
-  };
+};
 
 declare global {
   type GettersType = ImportsReturnType<typeof modules.getters>;
@@ -20,14 +20,14 @@ declare global {
   type DispatchType<T = (...args: any) => any> = T;
 }
 
-type ModuleTypes = "event";
+type ModuleTypes = "task";
 
 const moduleFields: Record<ModuleTypes, FlattenKeys<RootState>[]> = {
-  event: [
-    "event.items",
-    "event.selectedItemIndex",
-    "event.EventModalTable",
-    "event.searchText"
+  task: [
+    "task.items",
+    "task.selectedItemIndex",
+    "task.EventModalTable",
+    "task.searchText"
   ],
 };
 
@@ -100,6 +100,7 @@ const select = <T extends FlattenKeys<RootState>>(path: T) =>
   ) as DeepType<RootState, T>;
 
 export default function useStore() {
+  const dispatch = useDispatch(); 
   const getters = new Proxy({} as GettersType, {
     get: function (_target, module: ModuleTypes, _receiver) {
       let state: DeepPartial<RootState> = buildState(moduleFields[module]);
@@ -107,7 +108,7 @@ export default function useStore() {
     },
   });
 
-  const actions = _actions(useDispatch());
+  const actions = _actions(dispatch); 
 
   return [getters, actions, select] as const;
 }
