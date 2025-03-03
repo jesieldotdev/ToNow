@@ -25,7 +25,7 @@ const TabBar = ({ handleAdd }: TabBarProps) => {
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        elevation: 5,
+        // elevation: 5,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
       }}
@@ -44,7 +44,7 @@ const TabBar = ({ handleAdd }: TabBarProps) => {
           justifyContent: "center",
           alignItems: "center",
           shadowColor: "#3B82F6",
-          shadowOffset: { width: 0, height: 3 },
+          shadowOffset: { width: 0, height: 12 },
           shadowOpacity: 0.3,
           shadowRadius: 5,
           elevation: 8,
