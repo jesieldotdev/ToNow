@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import CustomText from "../components/CustomText";
 import EventItem from "./EventItem";
+import CreateTodo from "./CreateTodo";
 
 const events = [
   { time: "7:00 AM", title: "Wakeup", description: "Early wakeup from bed and fresh" },
@@ -16,6 +17,7 @@ const events = [
 ];
 
 const Schedule = () => {
+ 
   return (
     <View className="p-8 bg-white flex-1 mt-6">
       <CustomText variant="regular" className="text-sm text-gray-400">May 5, 2020</CustomText>
@@ -41,6 +43,7 @@ const Schedule = () => {
           </View>
         ))}
       </View>
+
       <ScrollView className="relative pl-8">
         <View className="absolute top-0 left-[-12px]  bottom-0 w-[2px] bg-blue-500" />
         {events.map((event, index) => (
@@ -53,6 +56,7 @@ const Schedule = () => {
           />
         ))}
       </ScrollView>
+
     </View>
   );
 };

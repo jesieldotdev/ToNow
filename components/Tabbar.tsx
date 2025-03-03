@@ -3,7 +3,11 @@ import { View, TouchableOpacity } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const TabBar = () => {
+interface TabBarProps {
+  handleAdd: () => void
+}
+
+const TabBar = ({ handleAdd }: TabBarProps) => {
 
   return (
     <View
@@ -31,6 +35,7 @@ const TabBar = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
+        onPress={handleAdd}
         style={{
           width: 60,
           height: 60,
