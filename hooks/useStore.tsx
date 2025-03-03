@@ -20,15 +20,16 @@ declare global {
   type DispatchType<T = (...args: any) => any> = T;
 }
 
-type ModuleTypes = "task";
+type ModuleTypes = "task" | "setting";
 
 const moduleFields: Record<ModuleTypes, FlattenKeys<RootState>[]> = {
   task: [
     "task.items",
     "task.selectedItemIndex",
-    "task.EventModalTable",
+    "task.taskModalTable",
     "task.searchText"
   ],
+  setting: ['setting', 'setting.showTabBar']
 };
 
 const _getters = (state: RootState): GettersType =>

@@ -11,11 +11,14 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
   const {
     task: { setTask },
   } = actions;
-  const isOpen = select("task.TaskModalTable");
+  const isOpen = select("task.taskModalTable");
+  const showTab = select("setting.showTabBar");
 
   function handleAdd() {
-    setTask("TaskModalTable", !isOpen);
+    setTask("taskModalTable", !isOpen);
   }
+
+  if(!showTab) return
 
   return (
     <View

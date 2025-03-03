@@ -9,7 +9,7 @@ type TaskState = {
       };
     };
   
-    TaskModalTable: boolean
+    taskModalTable: boolean
   }
   
   type TaskItem = {

@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Schedule from "screens/Schedule";
 import TabBar from "components/Tabbar";
 import ProfileScreen from "screens/Profile";
+import LoginScreen from "screens/Login";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,6 +17,7 @@ export default function TabNavigator() {
       >
         <Tab.Screen name="Home" component={Schedule} />
         <Tab.Screen name="Perfil" component={ProfileScreen} />
+        <Tab.Screen name="Login" component={LoginScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
