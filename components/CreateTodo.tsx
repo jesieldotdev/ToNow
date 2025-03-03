@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable, Platform } from "react-native";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable, Easing } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
 
 interface CreateEventProps {
-    handleAdd: (task: TaskItem )=>void
+    handleAdd: (task: TaskItem) => void;
     visible: boolean;
     onClose: () => void;
 }
-
-
-  
-  interface Time {
-    hour: string; // "09:00"
-    date: DateInfo;
-  }
-
 
 const colors = [
     { primary: "#FF5722", secondary: "#FF8A65" },
@@ -27,88 +19,78 @@ const colors = [
     { primary: "#673AB7", secondary: "#9575CD" }
 ];
 
-const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }) => {
-    const [showModal, setShowModal] = useState(visible);
-    const translateY = useRef(new Animated.Value(300)).current;
+const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
+    const translateY = useRef(new Animated.Value(500)).current;
+    const [isVisible, setIsVisible] = useState(visible);
 
     const [title, setTitle] = useState("");
     const [selectedColor, setSelectedColor] = useState(colors[3]); 
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
-    const [endTime, setEndTime] = useState(new Date());
 
-    
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [showStartTimePicker, setShowStartTimePicker] = useState(false);
-    const [showEndTimePicker, setShowEndTimePicker] = useState(false);
 
     useEffect(() => {
         if (visible) {
-            setShowModal(true);
+            setIsVisible(true);
+            translateY.setValue(500); // Garante que sempre começa fora da tela
             Animated.timing(translateY, {
                 toValue: 0,
-                duration: 300,
+                duration: 1000,
+                easing: Easing.out(Easing.ease),
                 useNativeDriver: true,
             }).start();
         } else {
             Animated.timing(translateY, {
                 toValue: 500,
-                duration: 300,
+                duration: 250,
+                easing: Easing.in(Easing.ease),
                 useNativeDriver: true,
-            }).start(() => setShowModal(false));
+            }).start(() => setIsVisible(false));
         }
     }, [visible]);
 
     const handleAddEvent = () => {
         if (title.trim().length > 0) {
-            const selectedDate = date;
-    
-            const dateInfo: DateInfo = {
-                day: {
-                    label: selectedDate.toLocaleDateString('en-US', { weekday: 'short' }), // "Sun", "Mon", etc.
-                    day: selectedDate.getDate(),
-                },
-                month: {
-                    label: selectedDate.toLocaleDateString('en-US', { month: 'short' }), // "Jan", "Feb", etc.
-                    day: selectedDate.getMonth() + 1, // JavaScript armazena meses começando do índice 0
-                },
-                year: selectedDate.getFullYear(),
-                dayWeek: {
-                    value: selectedDate.getDay(), // 0 (Domingo) - 6 (Sábado)
-                    label: selectedDate.toLocaleDateString('en-US', { weekday: 'short' }), // "Sun", "Mon", etc.
-                }
-            };
-    
-            const formattedTime: Time = {
-                hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), // "09:00"
-                date: dateInfo
-            };
-    
             handleAdd({
                 title,
-                description: '',
-                time: formattedTime,
+                description: "",
+                time: {
+                    hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    date: {
+                        day: { label: date.toLocaleDateString('en-US', { weekday: 'short' }), day: date.getDate() },
+                        month: { label: date.toLocaleDateString('en-US', { month: 'short' }), day: date.getMonth() + 1 },
+                        year: date.getFullYear(),
+                        dayWeek: { value: date.getDay(), label: date.toLocaleDateString('en-US', { weekday: 'short' }) }
+                    }
+                },
                 participants: [],
                 color: selectedColor
             });
-    
+
             setTitle("");
             setDate(new Date());
             setStartTime(new Date());
-            setEndTime(new Date());
-            onClose();
+
+            Animated.timing(translateY, {
+                toValue: 500,
+                duration: 250,
+                easing: Easing.in(Easing.ease),
+                useNativeDriver: true,
+            }).start(() => onClose());
         }
     };
-    
-    
 
     return (
-        <Modal visible={showModal} transparent animationType="fade">
-              <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={onClose}>
-                <Animated.View style={{ transform: [{ translateY }] }} className="bg-white p-6 rounded-t-2xl shadow-lg">
+        <Modal transparent visible={isVisible} animationType="none">
+            <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={onClose}>
+                <Animated.View
+                    style={{ transform: [{ translateY }] }}
+                    className="bg-white p-6 rounded-t-2xl shadow-lg"
+                >
                     <CustomText variant="bold" className="text-xl mb-4 text-center">📝 Add New Task</CustomText>
 
-                    {/* Campo de Título */}
                     <View className="mb-4">
                         <TextInput
                             className="text-lg p-3 border border-gray-300 rounded-lg bg-gray-100"
@@ -118,7 +100,6 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }
                         />
                     </View>
 
-                    {/* Seletor de Cor */}
                     <CustomText variant="semiBold" className="text-gray-700 mb-2">Color</CustomText>
                     <View className="flex flex-row gap-3 mb-4">
                         {colors.map((color, index) => (
@@ -139,7 +120,6 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }
                         ))}
                     </View>
 
-                    {/* Seletor de Data */}
                     <CustomText variant="semiBold" className="text-gray-700 mb-2">Date</CustomText>
                     <TouchableOpacity
                         className="p-3 border border-gray-300 rounded-lg bg-gray-100 mb-3"
@@ -159,9 +139,7 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }
                         />
                     )}
 
-                    {/* Seletor de Horário */}
                     <View className="flex flex-row justify-between mt-4">
-                        {/* Horário de Início */}
                         <View className="flex-1 mr-2">
                             <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
                             <TouchableOpacity
@@ -182,44 +160,21 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }
                                 />
                             )}
                         </View>
-
-                        {/* Horário de Fim */}
-                        {/* <View className="flex-1 ml-2">
-                            <CustomText variant="semiBold" className="text-gray-700 mb-2">End Time</CustomText>
-                            <TouchableOpacity
-                                className="p-3 border border-gray-300 rounded-lg bg-gray-100"
-                                onPress={() => setShowEndTimePicker(true)}
-                            >
-                                <CustomText variant="regular" className="text-gray-700">{endTime.toLocaleTimeString()}</CustomText>
-                            </TouchableOpacity>
-                            {showEndTimePicker && (
-                                <DateTimePicker
-                                    value={endTime}
-                                    mode="time"
-                                    display="default"
-                                    onChange={(_, selected) => {
-                                        setShowEndTimePicker(false);
-                                        if (selected) setEndTime(selected);
-                                    }}
-                                />
-                            )}
-                        </View> */}
                     </View>
 
-                    {/* Botões */}
                     <TouchableOpacity
-                        className={`p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4`}
+                        className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4"
                         onPress={handleAddEvent}
                         style={{ backgroundColor: selectedColor.primary }}
-
                     >
-                        <CustomText variant="bold" className="text-white text-lg"><AntDesign name="plus" size={28} color="white" /> Add Task</CustomText>
+                        <CustomText variant="bold" className="text-white text-lg">
+                            <AntDesign name="plus" size={28} color="white" /> Add Task
+                        </CustomText>
                     </TouchableOpacity>
 
                     <TouchableOpacity className="mt-4 items-center" onPress={onClose}>
-                        <CustomText variant="semiBold" className="text-gray-500"> Cancel</CustomText>
+                        <CustomText variant="semiBold" className="text-gray-500">Cancel</CustomText>
                     </TouchableOpacity>
-
                 </Animated.View>
             </Pressable>
         </Modal>
