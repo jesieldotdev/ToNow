@@ -35,7 +35,7 @@ const TabBar = () => {
           width: 60,
           height: 60,
           backgroundColor: "#3B82F6",
-          borderRadius: 30,
+          borderRadius: 20,
           justifyContent: "center",
           alignItems: "center",
           shadowColor: "#3B82F6",
