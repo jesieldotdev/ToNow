@@ -37,7 +37,7 @@ const CreateTodo: React.FC<CreateTodoProps> = ({ visible, onClose, onAdd }) => {
 
     return (
         <Modal visible={visible} transparent animationType="fade">
-            <Pressable className="flex-1 justify-end bg-black bg-opacity-30" onPress={onClose}>
+            <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.3)]" onPress={onClose}>
                 <Animated.View style={{ transform: [{ translateY }] }} className="bg-white p-6 rounded-t-2xl shadow-md">
                     <CustomText variant="bold" className="text-xl mb-4">Add New Task</CustomText>
                     <TextInput
