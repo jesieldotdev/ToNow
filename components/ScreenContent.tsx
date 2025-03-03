@@ -3,6 +3,7 @@ import { View, ScrollView } from "react-native";
 import CustomText from "../components/CustomText";
 import EventItem from "./EventItem";
 import CreateTodo from "./CreateTodo";
+// import useStore from "hooks/useStore";
 
 const events = [
   { time: "7:00 AM", title: "Wakeup", description: "Early wakeup from bed and fresh" },
@@ -15,6 +16,15 @@ const events = [
   },
   { time: "10:00 AM", title: "Breakfast", description: "Morning breakfast with bread, banana, egg bowl and tea." }
 ];
+
+// const [, actions, select] = useStore()
+// const {
+//   event: {
+//     filterEvents
+//   }
+// } = actions
+
+// const events = select('event.items')
 
 const Schedule = () => {
  

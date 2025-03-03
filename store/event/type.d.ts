@@ -15,5 +15,7 @@ type EventState = {
   type EventItem = {
     title: string;
     description: string;
-    isHighlighted?: boolean 
+    isHighlighted?: boolean
+    time: string
+    participants?: string[]
   }

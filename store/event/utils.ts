@@ -1,5 +1,6 @@
 export const getDefaultEventItem = (): EventItem => ({
     title: '',
     description: '',
-    isHighlighted: false
+    isHighlighted: false,
+    time: '00:00'
 })
