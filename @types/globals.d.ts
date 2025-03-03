@@ -79,3 +79,28 @@ type SearchLogicalOperatorSet = "and" | "or";
 type OrderBySet = "asc" | "desc";
 
 type DirectionArg = OrderBySet | "" | undefined | null;
+
+interface DayOfWeek {
+  value: number;  // 0 (Sunday) - 6 (Saturday)
+  label: string;  // "Sun", "Mon", "Tue", etc.
+}
+
+interface DateInfo {
+  day: {label: string; day: number}; // label: 'Sun, day: 0
+  month: {label: string; day: number};
+  year: number;
+  dayWeek: DayOfWeek;
+}
+
+interface Time {
+  hour: string; // "09:00"
+  date: DateInfo;
+}
+
+type TaskItem = {
+    time: Time;
+    title: string;
+    description: string;
+    participants?: string[] | undefined;
+    color: {primary: string; secondary: string}
+}

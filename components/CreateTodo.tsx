@@ -5,10 +5,17 @@ import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
 
 interface CreateEventProps {
+    handleAdd: (task: TaskItem )=>void
     visible: boolean;
     onClose: () => void;
-    onAdd: (title: string, date: Date, startTime: Date, endTime: Date, color: { primary: string, secondary: string }) => void;
 }
+
+
+  
+  interface Time {
+    hour: string; // "09:00"
+    date: DateInfo;
+  }
 
 
 const colors = [
@@ -20,7 +27,7 @@ const colors = [
     { primary: "#673AB7", secondary: "#9575CD" }
 ];
 
-const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, onAdd }) => {
+const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, handleAdd }) => {
     const [showModal, setShowModal] = useState(visible);
     const translateY = useRef(new Animated.Value(300)).current;
 
@@ -54,7 +61,37 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, onAdd }) =>
 
     const handleAddEvent = () => {
         if (title.trim().length > 0) {
-            onAdd(title, date, startTime, endTime, selectedColor);
+            const selectedDate = date;
+    
+            const dateInfo: DateInfo = {
+                day: {
+                    label: selectedDate.toLocaleDateString('en-US', { weekday: 'short' }), // "Sun", "Mon", etc.
+                    day: selectedDate.getDate(),
+                },
+                month: {
+                    label: selectedDate.toLocaleDateString('en-US', { month: 'short' }), // "Jan", "Feb", etc.
+                    day: selectedDate.getMonth() + 1, // JavaScript armazena meses começando do índice 0
+                },
+                year: selectedDate.getFullYear(),
+                dayWeek: {
+                    value: selectedDate.getDay(), // 0 (Domingo) - 6 (Sábado)
+                    label: selectedDate.toLocaleDateString('en-US', { weekday: 'short' }), // "Sun", "Mon", etc.
+                }
+            };
+    
+            const formattedTime: Time = {
+                hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), // "09:00"
+                date: dateInfo
+            };
+    
+            handleAdd({
+                title,
+                description: '',
+                time: formattedTime,
+                participants: [],
+                color: selectedColor
+            });
+    
             setTitle("");
             setDate(new Date());
             setStartTime(new Date());
@@ -62,6 +99,8 @@ const CreateEvent: React.FC<CreateEventProps> = ({ visible, onClose, onAdd }) =>
             onClose();
         }
     };
+    
+    
 
     return (
         <Modal visible={showModal} transparent animationType="fade">

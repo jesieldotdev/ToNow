@@ -3,7 +3,7 @@ import { Image, View } from "react-native";
 import CustomText from "./CustomText";
 
 interface EventProps {
-    time: string;
+    time: Time;
     title: string;
     description: string;
     isHighlighted?: boolean;
@@ -22,7 +22,7 @@ const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlight
             <View className={`ml-6 flex-1 p-5 rounded-xl drop-shadow-lg ${isHighlighted ? "bg-blue-500" : "bg-gray-100"}`}>
                 <View className="flex flex-row justify-between">
                     <CustomText variant="bold" className={`text-xl ${isHighlighted ? "text-white" : "text-black"}`}>{title}</CustomText>
-                    <CustomText variant="semiBold" className={`text-sm mb-1 ${isHighlighted ? 'text-white' : 'text-gray-400'}`}>{time}</CustomText>
+                    <CustomText variant="semiBold" className={`text-sm mb-1 ${isHighlighted ? 'text-white' : 'text-gray-400'}`}>{time.hour}</CustomText>
                 </View>
 
                 <CustomText variant="regular" className={`text-base mt-1 ${isHighlighted ? "text-white" : "text-gray-600"}`}>{description}</CustomText>
