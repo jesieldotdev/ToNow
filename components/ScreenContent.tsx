@@ -28,12 +28,15 @@ const Schedule = () => {
             >
               {day}
             </CustomText>
+            
             <CustomText
               variant="bold"
               className={`text-lg ${day === "Sat" ? "text-blue-500" : "text-gray-500"}`}
             >
               {index + 4}
             </CustomText>
+            {day === "Sat" ? <View className="w-1 h-1 bg-blue-500 rounded-full" /> : null}
+
           </View>
         ))}
       </View>
