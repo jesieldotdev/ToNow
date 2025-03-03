@@ -24,7 +24,8 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
     const [isVisible, setIsVisible] = useState(visible);
 
     const [title, setTitle] = useState("");
-    const [selectedColor, setSelectedColor] = useState(colors[3]); 
+    const [description, setDescription] = useState("");
+    const [selectedColor, setSelectedColor] = useState(colors[3]);
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
 
@@ -37,7 +38,7 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
             translateY.setValue(500); // Garante que sempre começa fora da tela
             Animated.timing(translateY, {
                 toValue: 0,
-                duration: 1000,
+                duration: 300,
                 easing: Easing.out(Easing.ease),
                 useNativeDriver: true,
             }).start();
@@ -100,7 +101,16 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
                         />
                     </View>
 
-                    <CustomText variant="semiBold" className="text-gray-700 mb-2">Color</CustomText>
+                    <View className="mb-4">
+                        <TextInput
+                            className="text-lg p-3 border border-gray-300 rounded-lg bg-gray-100"
+                            placeholder="Description"
+                            value={description}
+                            onChangeText={setDescription}
+                        />
+                    </View>
+
+                    {/* <CustomText variant="semiBold" className="text-gray-700 mb-2">Color</CustomText>
                     <View className="flex flex-row gap-3 mb-4">
                         {colors.map((color, index) => (
                             <TouchableOpacity
@@ -118,50 +128,52 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
                                 )}
                             </TouchableOpacity>
                         ))}
-                    </View>
+                    </View> */}
+                    <View className="flex flex-row gap-4">
 
-                    <CustomText variant="semiBold" className="text-gray-700 mb-2">Date</CustomText>
-                    <TouchableOpacity
-                        className="p-3 border border-gray-300 rounded-lg bg-gray-100 mb-3"
-                        onPress={() => setShowDatePicker(true)}
-                    >
-                        <CustomText variant="regular" className="text-gray-700">{date.toDateString()}</CustomText>
-                    </TouchableOpacity>
-                    {showDatePicker && (
-                        <DateTimePicker
-                            value={date}
-                            mode="date"
-                            display="default"
-                            onChange={(_, selected) => {
-                                setShowDatePicker(false);
-                                if (selected) setDate(selected);
-                            }}
-                        />
-                    )}
-
-                    <View className="flex flex-row justify-between mt-4">
-                        <View className="flex-1 mr-2">
-                            <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
+                        <View>
+                            <CustomText variant="semiBold" className="text-gray-700 mb-2">Date</CustomText>
                             <TouchableOpacity
-                                className="p-3 border border-gray-300 rounded-lg bg-gray-100"
-                                onPress={() => setShowStartTimePicker(true)}
+                                className="p-3 border border-gray-300 rounded-lg bg-gray-100 mb-3"
+                                onPress={() => setShowDatePicker(true)}
                             >
-                                <CustomText variant="regular" className="text-gray-700">{startTime.toLocaleTimeString()}</CustomText>
+                                <CustomText variant="regular" className="text-gray-700">{date.toDateString()}</CustomText>
                             </TouchableOpacity>
-                            {showStartTimePicker && (
+                            {showDatePicker && (
                                 <DateTimePicker
-                                    value={startTime}
-                                    mode="time"
+                                    value={date}
+                                    mode="date"
                                     display="default"
                                     onChange={(_, selected) => {
-                                        setShowStartTimePicker(false);
-                                        if (selected) setStartTime(selected);
+                                        setShowDatePicker(false);
+                                        if (selected) setDate(selected);
                                     }}
                                 />
                             )}
-                        </View>
-                    </View>
 
+                        </View>
+
+                            <View className="">
+                                <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
+                                <TouchableOpacity
+                                    className="p-3 border border-gray-300 rounded-lg bg-gray-100"
+                                    onPress={() => setShowStartTimePicker(true)}
+                                >
+                                    <CustomText variant="regular" className="text-gray-700">{startTime.toLocaleTimeString()}</CustomText>
+                                </TouchableOpacity>
+                                {showStartTimePicker && (
+                                    <DateTimePicker
+                                        value={startTime}
+                                        mode="time"
+                                        display="default"
+                                        onChange={(_, selected) => {
+                                            setShowStartTimePicker(false);
+                                            if (selected) setStartTime(selected);
+                                        }}
+                                    />
+                                )}
+                            </View>
+                    </View>
                     <TouchableOpacity
                         className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4"
                         onPress={handleAddEvent}
