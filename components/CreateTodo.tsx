@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable } from "react-native";
 import CustomText from "./CustomText";
-import { AntDesign } from "@expo/vector-icons";
 
 interface CreateTodoProps {
     visible: boolean;
@@ -10,20 +9,29 @@ interface CreateTodoProps {
 }
 
 const CreateTodo: React.FC<CreateTodoProps> = ({ visible, onClose, onAdd }) => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [time, setTime] = useState("");
-    const translateY = new Animated.Value(300);
+    const [showModal, setShowModal] = useState(visible);
+    const translateY = useRef(new Animated.Value(300)).current;
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (visible) {
+            setShowModal(true);
             Animated.timing(translateY, {
                 toValue: 0,
                 duration: 300,
                 useNativeDriver: true,
             }).start();
+        } else {
+            Animated.timing(translateY, {
+                toValue: 500,
+                duration: 300,
+                useNativeDriver: true,
+            }).start(() => setShowModal(false)); 
         }
     }, [visible]);
+
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [time, setTime] = useState("");
 
     const handleAddTodo = () => {
         if (title.trim().length > 0 && time.trim().length > 0) {
@@ -36,7 +44,7 @@ const CreateTodo: React.FC<CreateTodoProps> = ({ visible, onClose, onAdd }) => {
     };
 
     return (
-        <Modal visible={visible} transparent animationType="fade">
+        <Modal visible={showModal} transparent animationType="fade">
             <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.3)]" onPress={onClose}>
                 <Animated.View style={{ transform: [{ translateY }] }} className="bg-white p-6 rounded-t-2xl shadow-md">
                     <CustomText variant="bold" className="text-xl mb-4">Add New Task</CustomText>
@@ -54,7 +62,7 @@ const CreateTodo: React.FC<CreateTodoProps> = ({ visible, onClose, onAdd }) => {
                         onChangeText={setDescription}
                     />
                     <TextInput
-                        className="text-lg p-2 mb-2 border-b border-gray-300 "
+                        className="text-lg p-2 mb-2 border-b border-gray-300"
                         placeholder="Time (e.g. 9:00 AM)"
                         value={time}
                         onChangeText={setTime}

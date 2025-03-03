@@ -12,8 +12,8 @@ interface EventProps {
 const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted }) => {
     return (
         <View className="mb-6 flex-row items-center relative">
-            <View className={`w-6 h-6 border-2 ${isHighlighted ? "border-blue-500 bg-white" : "border-blue-500 bg-white"} rounded-full absolute -left-6  top-0 flex items-center justify-center`}>
-                {isHighlighted && <View className="w-3 h-3 bg-blue-500 rounded-full" />}
+            <View className={`w-5 h-5 border-2 ${isHighlighted ? "border-blue-500 bg-white" : "border-blue-500 bg-white"} rounded-full absolute -left-[20px]  top-0 flex items-center justify-center`}>
+                {isHighlighted && <View className="w-2 h-2 bg-blue-500 rounded-full" />}
             </View>
 
             <View className={`ml-6 flex-1 p-5 rounded-xl shadow-lg ${isHighlighted ? "bg-blue-500" : "bg-gray-100"}`}>

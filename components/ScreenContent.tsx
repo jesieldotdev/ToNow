@@ -3,6 +3,7 @@ import { View, ScrollView } from "react-native";
 import CustomText from "../components/CustomText";
 import EventItem from "./EventItem";
 import CreateTodo from "./CreateTodo";
+import { Container } from "./Container";
 // import useStore from "hooks/useStore";
 
 const events = [
@@ -29,7 +30,7 @@ const events = [
 const Schedule = () => {
  
   return (
-    <View className="p-8 bg-white flex-1 mt-6">
+    <Container>
       <CustomText variant="regular" className="text-sm text-gray-400">May 5, 2020</CustomText>
       <CustomText variant="bold" className="text-3xl mb-4">Today</CustomText>
       <View className="flex-row justify-between items-center mb-4 border-b border-gray-200 pb-2">
@@ -67,7 +68,7 @@ const Schedule = () => {
         ))}
       </ScrollView>
 
-    </View>
+    </Container>
   );
 };
 
