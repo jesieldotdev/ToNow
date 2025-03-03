@@ -1,13 +1,16 @@
 import { StatusBar } from "expo-status-bar";
 import "./global.css";
-import Schedule from "components/ScreenContent";
+import Schedule from "screens/Schedule/index";
 import TabBar from "./components/Tabbar";
 import { View } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateTodo from "components/CreateTodo";
 import Store from "./store";
 import useStore from "hooks/useStore";
 import { sortTasks } from "store/task/utils";
+import TabNavigator from "components/AppNavigator";
+import * as NavigationBar from "expo-navigation-bar";
+
 
 export default function App() {
   return (
@@ -18,37 +21,16 @@ export default function App() {
 }
 
 function AppContent() {
-  const [, actions, select] = useStore();
-  const {
-    task: {
-      addTaskItem
-    }
-  } = actions
-  const tasks = select("task.items");
-
-
-
-  const [isVisible, setIsVisible] = useState(false);
-
-  const handleAddTodo = (task: TaskItem) => {
-    console.log("Nova tarefa:", task);
-    addTaskItem(task)
-  };
-
-  function handleAdd() {
-    setIsVisible((prev) => !prev);
-  }
+  useEffect(() => {
+    // Define a cor da barra inferior para branco
+    NavigationBar.setBackgroundColorAsync("#fff");
+    NavigationBar.setButtonStyleAsync("dark"); // Ícones escuros para melhor visibilidade
+  }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F9FAFB" }}>
-      <Schedule tasks={sortTasks(tasks)} />
-      <TabBar handleAdd={handleAdd} />
-      <StatusBar style="light" />
-      <CreateTodo
-        visible={isVisible}
-        onClose={() => setIsVisible(false)}
-        handleAdd={handleAddTodo}
-      />
-    </View>
+    <>
+      <TabNavigator />
+      <StatusBar style="light" backgroundColor="#fff" translucent={false} />
+    </>
   );
 }

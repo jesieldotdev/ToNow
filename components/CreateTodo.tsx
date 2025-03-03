@@ -3,9 +3,10 @@ import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable, Easing }
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
+import useStore from "hooks/useStore";
 
 interface CreateEventProps {
-    handleAdd: (task: TaskItem) => void;
+    // handleAdd: (task: TaskItem) => void;
     visible: boolean;
     onClose: () => void;
 }
@@ -19,7 +20,23 @@ const colors = [
     { primary: "#673AB7", secondary: "#9575CD" }
 ];
 
-const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
+const CreateEvent = () => {
+    const [, actions, select] = useStore();
+    const {
+        task: {
+            addTaskItem,
+            setTask
+        }
+    } = actions
+
+    const visible = select("task.TaskModalTable");
+    const setIsOpen = () => setTask('TaskModalTable', !visible)
+
+    const handleAddTodo = (task: TaskItem) => {
+        console.log("Nova tarefa:", task);
+        addTaskItem(task)
+    };
+
     const translateY = useRef(new Animated.Value(500)).current;
     const [isVisible, setIsVisible] = useState(visible);
 
@@ -54,7 +71,7 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
 
     const handleAddEvent = () => {
         if (title.trim().length > 0) {
-            handleAdd({
+            handleAddTodo({
                 title,
                 description,
                 time: {
@@ -79,13 +96,13 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
                 duration: 250,
                 easing: Easing.in(Easing.ease),
                 useNativeDriver: true,
-            }).start(() => onClose());
+            }).start(() => setIsOpen());
         }
     };
 
     return (
         <Modal transparent visible={isVisible} animationType="none">
-            <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={onClose}>
+            <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={setIsOpen}>
                 <Animated.View
                     style={{ transform: [{ translateY }] }}
                     className="bg-white p-6 rounded-t-2xl shadow-lg"
@@ -153,26 +170,26 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
 
                         </View>
 
-                            <View className="">
-                                <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
-                                <TouchableOpacity
-                                    className="p-3 border border-gray-300 rounded-lg bg-gray-100"
-                                    onPress={() => setShowStartTimePicker(true)}
-                                >
-                                    <CustomText variant="regular" className="text-gray-700">{startTime.toLocaleTimeString()}</CustomText>
-                                </TouchableOpacity>
-                                {showStartTimePicker && (
-                                    <DateTimePicker
-                                        value={startTime}
-                                        mode="time"
-                                        display="default"
-                                        onChange={(_, selected) => {
-                                            setShowStartTimePicker(false);
-                                            if (selected) setStartTime(selected);
-                                        }}
-                                    />
-                                )}
-                            </View>
+                        <View className="">
+                            <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
+                            <TouchableOpacity
+                                className="p-3 border border-gray-300 rounded-lg bg-gray-100"
+                                onPress={() => setShowStartTimePicker(true)}
+                            >
+                                <CustomText variant="regular" className="text-gray-700">{startTime.toLocaleTimeString()}</CustomText>
+                            </TouchableOpacity>
+                            {showStartTimePicker && (
+                                <DateTimePicker
+                                    value={startTime}
+                                    mode="time"
+                                    display="default"
+                                    onChange={(_, selected) => {
+                                        setShowStartTimePicker(false);
+                                        if (selected) setStartTime(selected);
+                                    }}
+                                />
+                            )}
+                        </View>
                     </View>
                     <TouchableOpacity
                         className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4"
@@ -184,7 +201,7 @@ const CreateEvent = ({ visible, onClose, handleAdd }: CreateEventProps) => {
                         </CustomText>
                     </TouchableOpacity>
 
-                    <TouchableOpacity className="mt-4 items-center" onPress={onClose}>
+                    <TouchableOpacity className="mt-4 items-center" onPress={setIsOpen}>
                         <CustomText variant="semiBold" className="text-gray-500">Cancel</CustomText>
                     </TouchableOpacity>
                 </Animated.View>

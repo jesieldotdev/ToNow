@@ -66,7 +66,7 @@ export const initialTaskState = (): TaskState=>(
       selectedItemIndex: -1,
       searchText: '',
       filter: {
-        Task: {
+        task: {
           filter: {
             page: 0,
             limit: 50,

@@ -3,7 +3,7 @@ type TaskState = {
     selectedItemIndex: number;
     searchText: string;
     filter: {
-      Task: {
+      task: {
         filter: SearchFilter<TaskItem>;
         data: PaginatedResponse<TaskItem>;
       };

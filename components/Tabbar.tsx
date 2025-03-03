@@ -1,13 +1,21 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import useStore from "hooks/useStore";
 
-interface TabBarProps {
-  handleAdd: () => void
-}
+interface TabBarProps extends BottomTabBarProps {}
 
-const TabBar = ({ handleAdd }: TabBarProps) => {
+const TabBar = ({ navigation, state }: TabBarProps) => {
+  const [, actions, select] = useStore();
+  const {
+    task: { setTask },
+  } = actions;
+  const isOpen = select("task.TaskModalTable");
+
+  function handleAdd() {
+    setTask("TaskModalTable", !isOpen);
+  }
 
   return (
     <View
@@ -25,15 +33,20 @@ const TabBar = ({ handleAdd }: TabBarProps) => {
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        // elevation: 5,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
       }}
     >
-      <TouchableOpacity>
-        <FontAwesome name="clock-o" size={24} color="#3B82F6" />
+      {/* Botão Home */}
+      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+        <FontAwesome
+          name="clock-o"
+          size={24}
+          color={state.index === 0 ? "#3B82F6" : "#D1D5DB"} // Azul se for ativo, cinza se não for
+        />
       </TouchableOpacity>
 
+      {/* Botão de Adicionar */}
       <TouchableOpacity
         onPress={handleAdd}
         style={{
@@ -54,8 +67,13 @@ const TabBar = ({ handleAdd }: TabBarProps) => {
         <AntDesign name="plus" size={28} color="white" />
       </TouchableOpacity>
 
-      <TouchableOpacity>
-        <FontAwesome name="user" size={24} color="#D1D5DB" />
+      {/* Botão Perfil */}
+      <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
+        <FontAwesome
+          name="user"
+          size={24}
+          color={state.index === 1 ? "#3B82F6" : "#D1D5DB"} // Azul se for ativo, cinza se não for
+        />
       </TouchableOpacity>
     </View>
   );

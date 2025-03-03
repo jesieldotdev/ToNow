@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import CustomText from "../components/CustomText";
-import EventItem from "./EventItem";
-import { Container } from "./Container";
-import { DayOfWeek } from "./DayOfWeek";
+import CustomText from "../../components/CustomText";
+import EventItem from "../../components/EventItem";
+import { Container } from "../../components/Container";
+import { DayOfWeek } from "../../components/DayOfWeek";
+import useStore from "hooks/useStore";
+import CreateEvent from "components/CreateTodo";
 
 interface ScheduleProps {
   tasks: TaskItem[];
@@ -15,7 +17,12 @@ interface Day {
   dayNumber: number;
 }
 
-const Schedule = ({ tasks }: ScheduleProps) => {
+const Schedule = () => {
+  const [, actions, select] = useStore();
+
+  const tasks = select("task.items");
+
+
     const today = new Date();
     const currentDayOfWeek = today.getDay(); 
     const currentDayOfMonth = today.getDate(); 
@@ -77,6 +84,8 @@ const Schedule = ({ tasks }: ScheduleProps) => {
                     </CustomText>
                 )}
             </ScrollView>
+
+            <CreateEvent />
         </Container>
     );
 };
