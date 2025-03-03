@@ -42,14 +42,14 @@ const Schedule = () => {
         ))}
       </View>
       <ScrollView className="relative pl-8">
-        <View className="absolute left-[-12px] top-0 bottom-0 w-[2px] bg-blue-500" />
+        <View className="absolute top-0 left-[-12px]  bottom-0 w-[2px] bg-blue-500" />
         {events.map((event, index) => (
           <EventItem
             key={index}
             time={event.time}
             title={event.title}
             description={event.description}
-            isHighlighted={event.title === "Meeting"}
+            isHighlighted={event.title === "Morning Exercise"}
           />
         ))}
       </ScrollView>
