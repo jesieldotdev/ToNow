@@ -6,12 +6,14 @@ import { useNavigation } from "@react-navigation/native";
 import useStore from "hooks/useStore";
 
 const LoginScreen = ({ navigation }: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
     const [, actions, select] = useStore();
     const {
       setting: { setSetting },
     } = actions;
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+
     const showTab = select('setting.showTabBar')
 
   useEffect(() => {
