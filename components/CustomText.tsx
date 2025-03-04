@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, TextProps } from "react-native";
 import { useFonts, Montserrat_400Regular, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_300Light, Montserrat_200ExtraLight, Montserrat_500Medium,  Montserrat_800ExtraBold, Montserrat_900Black} from "@expo-google-fonts/montserrat";
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
 // import clsx from "clsx";
 
 interface CustomTextProps extends TextProps {
@@ -21,10 +21,15 @@ const CustomText: React.FC<CustomTextProps> = ({ variant = "regular", className,
     Montserrat_900Black
   });
 
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
+  useEffect(() => {
+    if (fontsLoaded) {
+      SplashScreen.hideAsync(); // Esconde a splash assim que as fontes carregarem
+    }
+  }, [fontsLoaded]);
 
+  if (!fontsLoaded) {
+    return null; // Evita quebrar o app enquanto a fonte carrega
+  }
   const fontStyles = {
     extraLight: { fontFamily: "Montserrat_200ExtraLight" },
     light: { fontFamily: "Montserrat_300Light" },

@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+// import "nativewind/css";
 import "./global.css";
 import TabNavigator from "components/AppNavigator";
 import Store from "./store";
