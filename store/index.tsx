@@ -1,10 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import React from "react";
 import { Provider } from "react-redux";
-import { getPersistConfig } from "redux-deep-persist";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import createPersistStorage  from "redux-persist-expo-filesystem"; // ✅ Novo método de armazenamento
+import createPersistStorage from "redux-persist-expo-filesystem"; // ✅ Importação correta do storage
 import task from "./task/reducer";
 import setting from "./setting/reducer";
 import actions from "./actions";
@@ -12,27 +11,26 @@ import getters from "./getters";
 
 export const modules = { getters, actions };
 
-// ✅ Criamos o armazenamento usando `redux-persist-expo-filesystem`
+// ✅ Use o storage diretamente (sem chamar como função)
 const storage = createPersistStorage;
 
 const reducer = combineReducers({
   task,
-  setting
+  setting,
 });
 
-// ✅ Agora usamos `storage` em vez de `AsyncStorage`
-const persistConfig = getPersistConfig({
+// ✅ Configuração do Redux Persist
+const persistConfig = {
   key: "root",
-  storage, // 🔥 Substituímos AsyncStorage pelo novo storage
-  blacklist: [],
-  rootReducer: reducer,
-});
+  storage, // 🔥 Apenas passe o storage diretamente, sem chamar como função
+  blacklist: [], // Se quiser ignorar algum reducer, adicione aqui
+};
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware: any) =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
@@ -52,6 +50,7 @@ const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 
+// ✅ Provedor do Redux Persist com PersistGate
 const Store = ({ children }: { children: React.JSX.Element }) => {
   return (
     <Provider store={store}>
