@@ -8,7 +8,6 @@ import { RootState } from "store";
 import * as NavigationBar from "expo-navigation-bar";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
-import { Platform } from "react-native";
 import { Provider as PaperProvider } from "react-native-paper";
 
 
@@ -21,7 +20,6 @@ Notifications.setNotificationHandler({
   }),
 });
 
-// ✅ Função para registrar notificações push
 async function registerForPushNotificationsAsync() {
   if (!Device.isDevice) {
     alert("As notificações só funcionam em dispositivos físicos.");

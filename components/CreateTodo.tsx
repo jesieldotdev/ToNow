@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import  { useState, useEffect, useRef } from "react";
 import * as NavigationBar from "expo-navigation-bar";
 import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable, Easing } from "react-native";
 import CustomText from "./CustomText";
@@ -6,7 +6,6 @@ import { AntDesign } from "@expo/vector-icons";
 import useStore from "hooks/useStore";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import TimePickerModal from "./TimePicker";
 import DatePickerModal from "./DatePicker";
 import CustomTimePicker from "./TimePicker";
 
@@ -24,7 +23,6 @@ const CreateEvent = () => {
     const setIsOpen = () => setTask("taskModalTable", !visible);
 
     const handleAddTodo = (task: TaskItem) => {
-        console.log("Nova tarefa:", task);
         addTaskItem(task);
     };
 
