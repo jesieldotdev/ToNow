@@ -6,6 +6,7 @@ import { Container } from "../../components/Container";
 import { DayOfWeek } from "../../components/DayOfWeek";
 import useStore from "hooks/useStore";
 import CreateEvent from "components/CreateTodo";
+import { sortTasks } from "store/task/utils";
 
 interface ScheduleProps {
     tasks: TaskItem[];
@@ -20,7 +21,7 @@ interface Day {
 const Schedule = () => {
     const [, actions, select] = useStore();
 
-    const tasks = select("task.items");
+    const tasks = sortTasks(select("task.items"))
     const theme = select("setting.theme");
 
     const today = new Date();

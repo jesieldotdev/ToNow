@@ -139,6 +139,7 @@ const CreateEvent = () => {
                             </TouchableOpacity>
                             {showDatePicker && (
                                 <DateTimePicker
+                                    themeVariant={theme}
                                     value={date}
                                     mode="date"
                                     display="default"
@@ -164,6 +165,7 @@ const CreateEvent = () => {
                             </TouchableOpacity>
                             {showStartTimePicker && (
                                 <DateTimePicker
+                                    themeVariant={theme}
                                     value={startTime}
                                     mode="time"
                                     display="default"

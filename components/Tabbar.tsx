@@ -28,7 +28,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
     <View
       className={`absolute bottom-0 left-0 right-0 p-4 flex-row justify-around items-center 
         ${theme === "dark" ? "bg-bgDark" : "bg-bgLight"} 
-        shadow-md border-t border-gray-300 dark:border-gray-700 rounded-t-2xl
+        shadow-md  rounded-t-2xl
       `}
     >
       {/* Botão Home */}
@@ -36,7 +36,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
         <FontAwesome
           name="clock-o"
           size={24}
-          color={state.index === 0 ? "text-primary" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}
+          style={{ color: state.index === 0 ? "#3B82F6" : theme === "dark" ? "#4b5563" : "#6B7280" }}
         />
       </TouchableOpacity>
 
@@ -53,7 +53,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
         <FontAwesome
           name="user"
           size={24}
-          color={state.index === 1 ? "text-primary" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}
+          style={{ color: state.index === 1 ? "#3B82F6" : theme === "dark" ? "#4b5563" : "#6B7280" }}
         />
       </TouchableOpacity>
     </View>
