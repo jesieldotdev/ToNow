@@ -5,10 +5,10 @@ export const initialTaskState = (): TaskState=>(
           time: {
             hour: "07:00",
             date: {
-              day: { label: "Mon", day: 4 },
-              month: { label: "Mar", day: 3 },
+              day: { label: "mon", value: 4 },
+              month: { label: "mar", value: 3 },
               year: 2024,
-              dayWeek: { value: 1, label: "Mon" },
+              dayWeek: { value: 1, label: "mon" },
             },
           },
           title: "Wakeup",
@@ -19,10 +19,10 @@ export const initialTaskState = (): TaskState=>(
           time: {
             hour: "08:00",
             date: {
-              day: { label: "Mon", day: 4 },
-              month: { label: "Mar", day: 3 },
+              day: { label: "mon", value: 4 },
+              month: { label: "mar", value: 3 },
               year: 2024,
-              dayWeek: { value: 1, label: "Mon" },
+              dayWeek: { value: 1, label: "mon" },
             },
           },
           title: "Morning Exercise",
@@ -33,10 +33,10 @@ export const initialTaskState = (): TaskState=>(
           time: {
             hour: "09:00",
             date: {
-              day: { label: "Mon", day: 4 },
-              month: { label: "Mar", day: 3 },
+              day: { label: "mon", value: 4 },
+              month: { label: "mar", value: 3 },
               year: 2024,
-              dayWeek: { value: 1, label: "Mon" },
+              dayWeek: { value: 1, label: "mon" },
             },
           },
           title: "Meeting",
@@ -51,10 +51,10 @@ export const initialTaskState = (): TaskState=>(
           time: {
             hour: "10:00",
             date: {
-              day: { label: "Mon", day: 4 },
-              month: { label: "Mar", day: 3 },
+              day: { label: "mon", value: 4 },
+              month: { label: "mar", value: 3 },
               year: 2024,
-              dayWeek: { value: 1, label: "Mon" },
+              dayWeek: { value: 1, label: "mon" },
             },
           },
           title: "Breakfast",
@@ -62,7 +62,7 @@ export const initialTaskState = (): TaskState=>(
           color: { primary: "#FF5722", secondary: "#FF8A65" },
         },
       ],
-      TaskModalTable: false,
+      taskModalTable: false,
       selectedItemIndex: -1,
       searchText: '',
       filter: {

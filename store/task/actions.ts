@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios";
 import { setTask as setTaskTask } from "./reducer";
 import { stringify } from "querystring";
+import { scheduleTaskNotification } from "components/Notifications";
+import { RootState } from "store";
 
 interface Response {
   message: string;
@@ -72,15 +74,19 @@ export const filterTasks =
         });
     });
 
-export const addTaskItem =
-  (getState: () => RootState, actions: ActionsType) =>
+    export const addTaskItem =
+    (getState: () => RootState, actions: ActionsType) =>
     (newTask: TaskItem): void => {
       const {
         task: { setTask },
       } = actions;
-
+  
       const state = getState();
-      const currentTasks = state.task.items || []; // Garante que o array existe
-
-      setTask("items", [...currentTasks, newTask]); // Adiciona a nova tarefa ao array
+      const currentTasks = state.task.items || []; 
+  
+      setTask("items", [...currentTasks, newTask]); 
+  
+      
+      scheduleTaskNotification(newTask);
     };
+  

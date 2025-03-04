@@ -64,8 +64,8 @@ const CreateEvent = () => {
                 time: {
                     hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     date: {
-                        day: { label: date.toLocaleDateString('en-US', { weekday: 'short' }), day: date.getDate() },
-                        month: { label: date.toLocaleDateString('en-US', { month: 'short' }), day: date.getMonth() + 1 },
+                        day: { label: date.toLocaleDateString('en-US', { weekday: 'short' }), value: date.getDate() },
+                        month: { label: date.toLocaleDateString('en-US', { month: 'short' }), value: date.getMonth() + 1 },
                         year: date.getFullYear(),
                         dayWeek: { value: date.getDay(), label: date.toLocaleDateString('en-US', { weekday: 'short' }) }
                     }

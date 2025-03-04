@@ -86,8 +86,8 @@ interface DayOfWeek {
 }
 
 interface DateInfo {
-  day: {label: string; day: number}; // label: 'Sun, day: 0
-  month: {label: string; day: number};
+  day: {label: string; value: number}; // label: 'Sun, day: 0
+  month: {label: string; value: number};
   year: number;
   dayWeek: DayOfWeek;
 }

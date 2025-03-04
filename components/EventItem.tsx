@@ -12,7 +12,7 @@ interface EventProps {
   participants?: string[];
 }
 
-const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted, participants }) => {
+const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted, participants }:EventProps) => {
   const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
 
   // Se description não existir ou for vazia, usa o título como descrição

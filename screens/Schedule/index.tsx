@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import CustomText from "../../components/CustomText";
 import EventItem from "../../components/EventItem";
@@ -7,6 +7,7 @@ import { DayOfWeek } from "../../components/DayOfWeek";
 import useStore from "hooks/useStore";
 import CreateEvent from "components/CreateTodo";
 import { sortTasks, sortTasksByNearestTime } from "store/task/utils";
+import { scheduleTaskNotification } from "components/Notifications";
 
 interface ScheduleProps {
     tasks: TaskItem[];
@@ -21,8 +22,10 @@ interface Day {
 const Schedule = () => {
     const [, actions, select] = useStore();
 
-    const tasks = sortTasksByNearestTime(select("task.items"))
+    const tasks = sortTasks(select("task.items"))
     const theme = select("setting.theme");
+
+    console.log(tasks)
 
     const today = new Date();
     const currentDayOfWeek = today.getDay();
@@ -30,6 +33,13 @@ const Schedule = () => {
     const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
     const currentHour = today.getHours();
+
+
+    // useEffect(() => {
+    //     tasks.forEach(task => {
+    //       scheduleTaskNotification(task);
+    //     });
+    //   }, []);
 
     const generateDays = (): Day[] => {
         return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((label, index) => {
@@ -42,7 +52,7 @@ const Schedule = () => {
     const days = generateDays();
     const [selectedDay, setSelectedDay] = useState(today.getDate());
 
-    const filteredTasks = tasks.filter(event => event.time.date.day.day === selectedDay);
+    const filteredTasks = tasks.filter(event => event.time.date.day.value === selectedDay);
 
     function isHighlighted(task: TaskItem) {
         return parseInt(task.time.hour.split(":")[0]) === currentHour;
