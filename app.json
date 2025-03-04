@@ -31,6 +31,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.jesiel364.tonowapp"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "01516cec-745a-43bc-8de6-2b4ecdd7593d"
       }
     }
   }

@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { getPersistConfig } from "redux-deep-persist";
 import { persistReducer, persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import createPersistStorage  from "redux-persist-expo-filesystem"; // ✅ Novo método de armazenamento
 import task from "./task/reducer";
 import setting from "./setting/reducer";
 import actions from "./actions";
@@ -12,18 +12,18 @@ import getters from "./getters";
 
 export const modules = { getters, actions };
 
-declare global {
-  type RootState = ReturnType<typeof store.getState>;
-}
+// ✅ Criamos o armazenamento usando `redux-persist-expo-filesystem`
+const storage = createPersistStorage;
 
 const reducer = combineReducers({
   task,
   setting
 });
 
+// ✅ Agora usamos `storage` em vez de `AsyncStorage`
 const persistConfig = getPersistConfig({
   key: "root",
-  storage: AsyncStorage,
+  storage, // 🔥 Substituímos AsyncStorage pelo novo storage
   blacklist: [],
   rootReducer: reducer,
 });

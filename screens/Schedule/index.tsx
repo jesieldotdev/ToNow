@@ -59,10 +59,10 @@ const Schedule = () => {
             </CustomText>
 
             {/* Dias da Semana */}
-            <DayOfWeek selectedDay={selectedDay} setSelectedDay={setSelectedDay} days={days} theme={theme} />
+            <DayOfWeek selectedDay={selectedDay} setSelectedDay={setSelectedDay} days={days} />
 
             {/* Linha de Tempo */}
-            <ScrollView className="relative pl-8">
+            <ScrollView className="relative pl-8 ">
                 <View className={`absolute top-0 left-[-12px] bottom-32 w-[2px] ${theme === "dark" ? "bg-primary" : "bg-primary"}`} />
                 
                 {/* Lista de Eventos */}
@@ -82,6 +82,8 @@ const Schedule = () => {
                         No events for this day.
                     </CustomText>
                 )}
+
+                <View className="h-24"/>
             </ScrollView>
 
             {/* Botão de Criar Evento */}
