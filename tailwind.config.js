@@ -2,7 +2,12 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  content: ["./App.tsx", "./screens/**/*.{tsx,js}", "./components/**/*.{tsx,js}"],
+  presets: [require("nativewind/preset")], // Certifique-se de que o preset está aqui corretamente
+  content: [
+    "./App.{js,jsx,ts,tsx}",
+    "./screens/**/*.{js,jsx,ts,tsx}",
+    "./components/**/*.{js,jsx,ts,tsx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -19,6 +24,6 @@ module.exports = {
       },
     },
   },
-  darkMode: "class", 
+  darkMode: "class",
   plugins: [],
 };
