@@ -1,16 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import "./global.css";
-import Schedule from "screens/Schedule/index";
-import TabBar from "./components/Tabbar";
-import { View } from "react-native";
-import { useEffect, useState } from "react";
-import CreateTodo from "components/CreateTodo";
-import Store from "./store";
-import useStore from "hooks/useStore";
-import { sortTasks } from "store/task/utils";
 import TabNavigator from "components/AppNavigator";
+import Store from "./store";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 import * as NavigationBar from "expo-navigation-bar";
-
 
 export default function App() {
   return (
@@ -21,16 +16,18 @@ export default function App() {
 }
 
 function AppContent() {
+  const theme = useSelector((state: RootState) => state.setting.theme); 
+
   useEffect(() => {
-    // Define a cor da barra inferior para branco
-    NavigationBar.setBackgroundColorAsync("#fff");
-    NavigationBar.setButtonStyleAsync("dark"); // Ícones escuros para melhor visibilidade
-  }, []);
+    
+    NavigationBar.setBackgroundColorAsync(theme === "dark" ? "#282828" : "#fff");
+    NavigationBar.setButtonStyleAsync(theme === "dark" ? "light" : "dark"); 
+  }, [theme]);
 
   return (
     <>
       <TabNavigator />
-      <StatusBar style="light" backgroundColor="#fff" translucent={false} />
+      <StatusBar style={theme === "dark" ? "light" : "dark"} backgroundColor={theme === "dark" ? "#282828" : "#fff"} translucent={false} />
     </>
   );
 }

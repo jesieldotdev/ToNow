@@ -29,7 +29,7 @@ const moduleFields: Record<ModuleTypes, FlattenKeys<RootState>[]> = {
     "task.taskModalTable",
     "task.searchText"
   ],
-  setting: ['setting', 'setting.showTabBar']
+  setting: ['setting', 'setting.showTabBar', 'setting.theme']
 };
 
 const _getters = (state: RootState): GettersType =>

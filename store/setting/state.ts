@@ -1,5 +1,6 @@
 export const initialSettingState = (): SettingState=>(
     {
-      showTabBar: true
+      showTabBar: true,
+      theme: "dark"
     }
   )

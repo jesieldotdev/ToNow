@@ -4,21 +4,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
 import useStore from "hooks/useStore";
-
-interface CreateEventProps {
-    // handleAdd: (task: TaskItem) => void;
-    visible: boolean;
-    onClose: () => void;
-}
-
-const colors = [
-    { primary: "#FF5722", secondary: "#FF8A65" },
-    { primary: "#FF9800", secondary: "#FFB74D" },
-    { primary: "#FFC107", secondary: "#FFD54F" },
-    { primary: "#4CAF50", secondary: "#81C784" },
-    { primary: "#00BCD4", secondary: "#4DD0E1" },
-    { primary: "#673AB7", secondary: "#9575CD" }
-];
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 
 const CreateEvent = () => {
     const [, actions, select] = useStore();
@@ -27,14 +14,15 @@ const CreateEvent = () => {
             addTaskItem,
             setTask
         }
-    } = actions
+    } = actions;
 
+    const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
     const visible = select("task.taskModalTable");
-    const setIsOpen = () => setTask('taskModalTable', !visible)
+    const setIsOpen = () => setTask("taskModalTable", !visible);
 
     const handleAddTodo = (task: TaskItem) => {
         console.log("Nova tarefa:", task);
-        addTaskItem(task)
+        addTaskItem(task);
     };
 
     const translateY = useRef(new Animated.Value(500)).current;
@@ -42,7 +30,6 @@ const CreateEvent = () => {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [selectedColor, setSelectedColor] = useState(colors[3]);
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
 
@@ -84,10 +71,10 @@ const CreateEvent = () => {
                     }
                 },
                 participants: [],
-                color: selectedColor
             });
 
             setTitle("");
+            setDescription("");
             setDate(new Date());
             setStartTime(new Date());
 
@@ -105,14 +92,21 @@ const CreateEvent = () => {
             <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={setIsOpen}>
                 <Animated.View
                     style={{ transform: [{ translateY }] }}
-                    className="bg-white p-6 rounded-t-2xl shadow-lg"
+                    className={`p-6 rounded-t-2xl shadow-lg 
+                        ${theme === "dark" ? "bg-bgDark" : "bg-bgLight"}
+                    `}
                 >
-                    <CustomText variant="bold" className="text-xl mb-4 text-center">📝 Add New Task</CustomText>
+                    <CustomText variant="bold" className={`text-xl mb-4 text-center ${theme === "dark" ? "text-textPrimaryDark" : "text-textPrimaryLight"}`}>
+                        📝 Add New Task
+                    </CustomText>
 
                     <View className="mb-4">
                         <TextInput
-                            className="text-lg p-3 border border-gray-300 rounded-lg bg-gray-100"
+                            className={`text-lg p-3 border rounded-lg 
+                                ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
+                            `}
                             placeholder="Title"
+                            placeholderTextColor={theme === "dark" ? "#9CA3AF" : "#6B7280"}
                             value={title}
                             onChangeText={setTitle}
                         />
@@ -120,41 +114,28 @@ const CreateEvent = () => {
 
                     <View className="mb-4">
                         <TextInput
-                            className="text-lg p-3 border border-gray-300 rounded-lg bg-gray-100"
+                            className={`text-lg p-3 border rounded-lg 
+                                ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
+                            `}
                             placeholder="Description"
+                            placeholderTextColor={theme === "dark" ? "#9CA3AF" : "#6B7280"}
                             value={description}
                             onChangeText={setDescription}
                         />
                     </View>
 
-                    {/* <CustomText variant="semiBold" className="text-gray-700 mb-2">Color</CustomText>
-                    <View className="flex flex-row gap-3 mb-4">
-                        {colors.map((color, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                className="w-8 h-8 rounded-full flex items-center justify-center"
-                                onPress={() => setSelectedColor(color)}
-                                style={{
-                                    backgroundColor: color.primary,
-                                    borderWidth: selectedColor.primary === color.primary ? 3 : 0,
-                                    borderColor: color.secondary,
-                                }}
-                            >
-                                {selectedColor.primary === color.primary && (
-                                    <View className="w-3 h-3 rounded-full" style={{ backgroundColor: color.secondary }} />
-                                )}
-                            </TouchableOpacity>
-                        ))}
-                    </View> */}
                     <View className="flex flex-row gap-4">
-
                         <View>
-                            <CustomText variant="semiBold" className="text-gray-700 mb-2">Date</CustomText>
+                            <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
+                                Date
+                            </CustomText>
                             <TouchableOpacity
-                                className="p-3 border border-gray-300 rounded-lg bg-gray-100 mb-3"
+                                className={`p-3 border rounded-lg 
+                                    ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
+                                `}
                                 onPress={() => setShowDatePicker(true)}
                             >
-                                <CustomText variant="regular" className="text-gray-700">{date.toDateString()}</CustomText>
+                                <CustomText variant="regular">{date.toDateString()}</CustomText>
                             </TouchableOpacity>
                             {showDatePicker && (
                                 <DateTimePicker
@@ -167,16 +148,19 @@ const CreateEvent = () => {
                                     }}
                                 />
                             )}
-
                         </View>
 
-                        <View className="">
-                            <CustomText variant="semiBold" className="text-gray-700 mb-2">Start Time</CustomText>
+                        <View>
+                            <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
+                                Start Time
+                            </CustomText>
                             <TouchableOpacity
-                                className="p-3 border border-gray-300 rounded-lg bg-gray-100"
+                                className={`p-3 border rounded-lg 
+                                    ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
+                                `}
                                 onPress={() => setShowStartTimePicker(true)}
                             >
-                                <CustomText variant="regular" className="text-gray-700">{startTime.toLocaleTimeString()}</CustomText>
+                                <CustomText variant="regular">{startTime.toLocaleTimeString()}</CustomText>
                             </TouchableOpacity>
                             {showStartTimePicker && (
                                 <DateTimePicker
@@ -191,10 +175,10 @@ const CreateEvent = () => {
                             )}
                         </View>
                     </View>
+
                     <TouchableOpacity
-                        className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4"
+                        className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4 bg-primary"
                         onPress={handleAddEvent}
-                        style={{ backgroundColor: selectedColor.primary }}
                     >
                         <CustomText variant="bold" className="text-white text-lg">
                             <AntDesign name="plus" size={28} color="white" /> Add Task
@@ -202,7 +186,9 @@ const CreateEvent = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity className="mt-4 items-center" onPress={setIsOpen}>
-                        <CustomText variant="semiBold" className="text-gray-500">Cancel</CustomText>
+                        <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textSecondaryDark" : "text-gray-500"}`}>
+                            Cancel
+                        </CustomText>
                     </TouchableOpacity>
                 </Animated.View>
             </Pressable>

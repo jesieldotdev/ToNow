@@ -3,6 +3,8 @@ import { View, TouchableOpacity } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import useStore from "hooks/useStore";
+import { useSelector } from "react-redux";
+import { RootState } from "store";
 
 interface TabBarProps extends BottomTabBarProps {}
 
@@ -11,6 +13,8 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
   const {
     task: { setTask },
   } = actions;
+
+  const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
   const isOpen = select("task.taskModalTable");
   const showTab = select("setting.showTabBar");
 
@@ -18,54 +22,28 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
     setTask("taskModalTable", !isOpen);
   }
 
-  if(!showTab) return
+  if (!showTab) return null;
 
   return (
     <View
-      style={{
-        position: "absolute",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: "white",
-        paddingTop: 10,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-      }}
+      className={`absolute bottom-0 left-0 right-0 p-4 flex-row justify-around items-center 
+        ${theme === "dark" ? "bg-bgDark" : "bg-bgLight"} 
+        shadow-md border-t border-gray-300 dark:border-gray-700 rounded-t-2xl
+      `}
     >
       {/* Botão Home */}
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <FontAwesome
           name="clock-o"
           size={24}
-          color={state.index === 0 ? "#3B82F6" : "#D1D5DB"} // Azul se for ativo, cinza se não for
+          color={state.index === 0 ? "text-primary" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}
         />
       </TouchableOpacity>
 
       {/* Botão de Adicionar */}
       <TouchableOpacity
         onPress={handleAdd}
-        style={{
-          width: 60,
-          height: 60,
-          backgroundColor: "#3B82F6",
-          borderRadius: 20,
-          justifyContent: "center",
-          alignItems: "center",
-          shadowColor: "#3B82F6",
-          shadowOffset: { width: 0, height: 12 },
-          shadowOpacity: 0.3,
-          shadowRadius: 5,
-          elevation: 8,
-          marginBottom: 20,
-        }}
+        className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center shadow-lg"
       >
         <AntDesign name="plus" size={28} color="white" />
       </TouchableOpacity>
@@ -75,7 +53,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
         <FontAwesome
           name="user"
           size={24}
-          color={state.index === 1 ? "#3B82F6" : "#D1D5DB"} // Azul se for ativo, cinza se não for
+          color={state.index === 1 ? "text-primary" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}
         />
       </TouchableOpacity>
     </View>
