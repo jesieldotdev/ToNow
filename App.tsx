@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import "./global.css"; 
+import "./global.css";
 import TabNavigator from "components/AppNavigator";
 import Store from "./store";
 import { useEffect, useRef } from "react";
@@ -9,6 +9,8 @@ import * as NavigationBar from "expo-navigation-bar";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { Platform } from "react-native";
+import { Provider as PaperProvider } from "react-native-paper";
+
 
 // 🔥 Configura como as notificações devem se comportar quando recebidas
 Notifications.setNotificationHandler({
@@ -42,7 +44,7 @@ async function registerForPushNotificationsAsync() {
   // ✅ Obtém o token de notificação (caso precise para notificações push no futuro)
   const token = (await Notifications.getExpoPushTokenAsync()).data;
   console.log("Expo Push Token:", token);
-  
+
   return token;
 }
 
@@ -71,18 +73,20 @@ export default function App() {
 
   return (
     <Store>
-      <AppContent />
+      <PaperProvider >
+        <AppContent />
+      </PaperProvider>
     </Store>
   );
 }
 
 function AppContent() {
-  const theme = useSelector((state: RootState) => state.setting.theme); 
+  const theme = useSelector((state: RootState) => state.setting.theme);
 
   useEffect(() => {
     // ✅ Atualiza a barra de navegação corretamente
     NavigationBar.setBackgroundColorAsync(theme === "dark" ? "#282828" : "#fff");
-    NavigationBar.setButtonStyleAsync(theme === "dark" ? "light" : "dark"); 
+    NavigationBar.setButtonStyleAsync(theme === "dark" ? "light" : "dark");
   }, [theme]);
 
   return (

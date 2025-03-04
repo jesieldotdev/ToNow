@@ -13,17 +13,17 @@ interface EventProps {
 }
 
 const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted, participants }:EventProps) => {
-  const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
+  const theme = useSelector((state: RootState) => state.setting.theme); 
 
-  // Se description não existir ou for vazia, usa o título como descrição
+  
   const displayedDescription = description && description.trim().length > 0 ? description : title;
 
   return (
     <View className="mb-6 flex-row items-center relative">
       {/* Indicador de Evento */}
       <View
-        className={`border-2 
-          ${isHighlighted ? "border-primary bg-bgLight w-8 h-8 -left-[25px]" : "border-primary bg-bgLight w-5 h-5 -left-[20px]"}
+        className={`border-2 ${theme === 'dark' ? 'bg-bgDark': 'bg-bgLight'}
+          ${isHighlighted ? "border-primary w-8 h-8 -left-[25px]" : "border-primary w-5 h-5 -left-[20px]"}
           rounded-full absolute top-0 flex items-center justify-center
         `}
       >

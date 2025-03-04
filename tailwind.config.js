@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/colors");
+export const colors = require("tailwindcss/colors");
 
 module.exports = {
   presets: [require("nativewind/preset")], // 🔥 Certifique-se de usar este preset!

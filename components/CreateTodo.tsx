@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
+import * as NavigationBar from "expo-navigation-bar";
 import { View, TextInput, TouchableOpacity, Modal, Animated, Pressable, Easing } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
 import useStore from "hooks/useStore";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
+import TimePickerModal from "./TimePicker";
+import DatePickerModal from "./DatePicker";
+import CustomTimePicker from "./TimePicker";
 
 const CreateEvent = () => {
     const [, actions, select] = useStore();
@@ -16,7 +19,7 @@ const CreateEvent = () => {
         }
     } = actions;
 
-    const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
+    const theme = useSelector((state: RootState) => state.setting.theme);
     const visible = select("task.taskModalTable");
     const setIsOpen = () => setTask("taskModalTable", !visible);
 
@@ -31,15 +34,15 @@ const CreateEvent = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(new Date());
+    const [time, setTime] = useState(new Date());
 
     const [showDatePicker, setShowDatePicker] = useState(false);
-    const [showStartTimePicker, setShowStartTimePicker] = useState(false);
+    const [showTimePicker, setShowTimePicker] = useState(false);
 
     useEffect(() => {
         if (visible) {
             setIsVisible(true);
-            translateY.setValue(500); // Garante que sempre começa fora da tela
+            translateY.setValue(500);
             Animated.timing(translateY, {
                 toValue: 0,
                 duration: 300,
@@ -62,7 +65,7 @@ const CreateEvent = () => {
                 title,
                 description,
                 time: {
-                    hour: startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    hour: time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     date: {
                         day: { label: date.toLocaleDateString('en-US', { weekday: 'short' }), value: date.getDate() },
                         month: { label: date.toLocaleDateString('en-US', { month: 'short' }), value: date.getMonth() + 1 },
@@ -76,7 +79,7 @@ const CreateEvent = () => {
             setTitle("");
             setDescription("");
             setDate(new Date());
-            setStartTime(new Date());
+            setTime(new Date());
 
             Animated.timing(translateY, {
                 toValue: 500,
@@ -87,8 +90,14 @@ const CreateEvent = () => {
         }
     };
 
+    useEffect(() => {
+        // ✅ Atualiza a barra de navegação corretamente
+        NavigationBar.setBackgroundColorAsync(theme === "dark" ? "#282828" : "#fff");
+        NavigationBar.setButtonStyleAsync(theme === "dark" ? "light" : "dark");
+    }, [theme]);
+
     return (
-        <Modal transparent visible={isVisible} animationType="none">
+        <Modal transparent visible={isVisible} animationType="fade" statusBarTranslucent>
             <Pressable className="flex-1 justify-end bg-[rgba(0,0,0,0.4)]" onPress={setIsOpen}>
                 <Animated.View
                     style={{ transform: [{ translateY }] }}
@@ -124,60 +133,31 @@ const CreateEvent = () => {
                         />
                     </View>
 
-                    <View className="flex flex-row gap-4">
-                        <View>
-                            <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
-                                Date
+                    {/* 🔥 Campo de Seleção de Data */}
+                    <View className="mb-4">
+                        <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
+                            Date
+                        </CustomText>
+                        <TouchableOpacity className={`p-3 border rounded-lg ${theme === 'dark' ? 'border-textPrimaryDark' : 'border-textSecondaryLight'}`} onPress={() => setShowDatePicker(true)}>
+                            <CustomText className={theme === 'dark' ? `text-textPrimaryDark` : 'text-textPrimaryLight'} variant="regular">
+                                {date.toDateString()}
                             </CustomText>
-                            <TouchableOpacity
-                                className={`p-3 border rounded-lg 
-                                    ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
-                                `}
-                                onPress={() => setShowDatePicker(true)}
-                            >
-                                <CustomText variant="regular">{date.toDateString()}</CustomText>
-                            </TouchableOpacity>
-                            {showDatePicker && (
-                                <DateTimePicker
-                                    themeVariant={theme}
-                                    value={date}
-                                    mode="date"
-                                    display="default"
-                                    onChange={(_, selected) => {
-                                        setShowDatePicker(false);
-                                        if (selected) setDate(selected);
-                                    }}
-                                />
-                            )}
-                        </View>
-
-                        <View>
-                            <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
-                                Start Time
-                            </CustomText>
-                            <TouchableOpacity
-                                className={`p-3 border rounded-lg 
-                                    ${theme === "dark" ? "border-gray-600 bg-cardDark text-textPrimaryDark" : "border-gray-300 bg-cardLight text-textPrimaryLight"}
-                                `}
-                                onPress={() => setShowStartTimePicker(true)}
-                            >
-                                <CustomText variant="regular">{startTime.toLocaleTimeString()}</CustomText>
-                            </TouchableOpacity>
-                            {showStartTimePicker && (
-                                <DateTimePicker
-                                    themeVariant={theme}
-                                    value={startTime}
-                                    mode="time"
-                                    display="default"
-                                    onChange={(_, selected) => {
-                                        setShowStartTimePicker(false);
-                                        if (selected) setStartTime(selected);
-                                    }}
-                                />
-                            )}
-                        </View>
+                        </TouchableOpacity>
                     </View>
 
+                    {/* 🔥 Campo de Seleção de Hora */}
+                    <View className="mb-4">
+                        <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textPrimaryDark" : "text-gray-700"} mb-2`}>
+                            Time
+                        </CustomText>
+                        <TouchableOpacity className={`p-3 border rounded-lg ${theme === 'dark' ? 'border-textPrimaryDark' : 'border-textSecondaryLight'}`} onPress={() => setShowTimePicker(true)}>
+                            <CustomText className={theme === 'dark' ? `text-textPrimaryDark` : 'text-textPrimaryLight'} variant="regular">
+                                {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </CustomText>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* 🔥 Botão de Adicionar Tarefa */}
                     <TouchableOpacity
                         className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4 bg-primary"
                         onPress={handleAddEvent}
@@ -187,11 +167,16 @@ const CreateEvent = () => {
                         </CustomText>
                     </TouchableOpacity>
 
-                    <TouchableOpacity className="mt-4 items-center" onPress={setIsOpen}>
-                        <CustomText variant="semiBold" className={`${theme === "dark" ? "text-textSecondaryDark" : "text-gray-500"}`}>
-                            Cancel
-                        </CustomText>
-                    </TouchableOpacity>
+                    {/* 🔥 Componentes de Modais Separados */}
+                    <DatePickerModal visible={showDatePicker} onClose={() => setShowDatePicker(false)} selectedDate={date} onDateSelect={setDate} theme={theme} />
+                    {showTimePicker && (
+                        <CustomTimePicker
+                            visible={showTimePicker}
+                            onClose={() => setShowTimePicker(false)}
+                            selectedTime={time}
+                            onTimeSelect={setTime}
+                        />
+                    )}
                 </Animated.View>
             </Pressable>
         </Modal>
