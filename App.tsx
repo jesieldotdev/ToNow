@@ -1,16 +1,14 @@
-import { StatusBar } from "expo-status-bar";
-import "./global.css";
-import TabNavigator from "components/AppNavigator";
-import Store from "./store";
-import { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import * as NavigationBar from "expo-navigation-bar";
-import * as Notifications from "expo-notifications";
+import './global.css';
+import TabNavigator from 'components/AppNavigator';
+import * as NavigationBar from 'expo-navigation-bar';
+import * as Notifications from 'expo-notifications';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useRef } from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { useSelector } from 'react-redux';
+import { cancelNotification, registerForPushNotificationsAsync } from 'store/setting/utils';
 
-import { Provider as PaperProvider } from "react-native-paper";
-import { cancelNotification, registerForPushNotificationsAsync } from "store/setting/utils";
-
-
+import Store from './store';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -20,26 +18,25 @@ Notifications.setNotificationHandler({
   }),
 });
 
-
 export default function App() {
   useEffect(() => {
     registerForPushNotificationsAsync();
 
     const notificationSubscription = Notifications.addNotificationResponseReceivedListener(
-      response => {
+      (response) => {
         const notificationId = response.notification.request.identifier;
-        cancelNotification(notificationId); 
+        cancelNotification(notificationId);
       }
     );
 
     return () => {
-      notificationSubscription.remove(); 
+      notificationSubscription.remove();
     };
   }, []);
 
   return (
     <Store>
-      <PaperProvider >
+      <PaperProvider>
         <AppContent />
       </PaperProvider>
     </Store>
@@ -50,15 +47,14 @@ function AppContent() {
   const theme = useSelector((state: RootState) => state.setting.theme);
 
   useEffect(() => {
-    
-    NavigationBar.setBackgroundColorAsync(theme === "dark" ? "#282828" : "#fff");
-    NavigationBar.setButtonStyleAsync(theme === "dark" ? "light" : "dark");
+    NavigationBar.setBackgroundColorAsync(theme === 'dark' ? '#282828' : '#fff');
+    NavigationBar.setButtonStyleAsync(theme === 'dark' ? 'light' : 'dark');
   }, [theme]);
 
   return (
     <>
       <TabNavigator />
-      <StatusBar style={theme === "dark" ? "light" : "dark"} translucent />
+      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} translucent />
     </>
   );
 }
