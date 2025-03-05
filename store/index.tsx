@@ -28,7 +28,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
-const store = configureStore({
+export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -48,7 +48,9 @@ const store = configureStore({
 
 const persistor = persistStore(store);
 
-export type RootState = ReturnType<typeof store.getState>;
+declare global {
+  type RootState = ReturnType<typeof store.getState>;
+}
 
 // ✅ Provedor do Redux Persist com PersistGate
 const Store = ({ children }: { children: React.JSX.Element }) => {

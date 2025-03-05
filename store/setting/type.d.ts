@@ -1,8 +1,13 @@
 type SettingState = {
     showTabBar: boolean
-    theme: 'dark' | 'light'
+    theme: Theme
+    accentColor: AccentColor
   }
   
   type SettingItem = {
     
 }
+
+type AccentColor = 'primary'| 'secondary' | 'thirth'
+type Theme = 'dark' | 'light'
+

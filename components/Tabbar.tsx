@@ -3,10 +3,9 @@ import { View, TouchableOpacity } from "react-native";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import useStore from "hooks/useStore";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
+import { User, Clock9Icon, Plus } from 'lucide-react-native';
 
-interface TabBarProps extends BottomTabBarProps {}
+interface TabBarProps extends BottomTabBarProps { }
 
 const TabBar = ({ navigation, state }: TabBarProps) => {
   const [, actions, select] = useStore();
@@ -14,7 +13,8 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
     task: { setTask },
   } = actions;
 
-  const theme = useSelector((state: RootState) => state.setting.theme); // Obtém o tema do Redux
+  const theme = select('setting.theme');
+  const accentColor = select('setting.accentColor'); 
   const isOpen = select("task.taskModalTable");
   const showTab = select("setting.showTabBar");
 
@@ -43,7 +43,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
       {/* Botão de Adicionar */}
       <TouchableOpacity
         onPress={handleAdd}
-        className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center shadow-lg"
+        className={`w-16 h-16 bg-${accentColor} rounded-2xl flex items-center justify-center shadow-lg`}
       >
         <AntDesign name="plus" size={28} color="white" />
       </TouchableOpacity>
@@ -53,7 +53,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
         <FontAwesome
           name="user"
           size={24}
-          style={{ color: state.index === 1 ? "#3B82F6" : theme === "dark" ? "#4b5563" : "#6B7280" }}
+          style={{ color: state.index !== 0 ? "#3B82F6" : theme === "dark" ? "#4b5563" : "#6B7280" }}
         />
       </TouchableOpacity>
     </View>

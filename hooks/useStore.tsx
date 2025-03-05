@@ -9,10 +9,10 @@ type ImportReturnType<T extends Record<string, (...args: any) => any>> = {
 };
 
 type ImportsReturnType<
-  T extends Record<string, Record<string, (...args: any) => any>> 
+  T extends Record<string, Record<string, (...args: any) => any>>
 > = {
     [K in keyof T]: ImportReturnType<T[K]>;
-};
+  };
 
 declare global {
   type GettersType = ImportsReturnType<typeof modules.getters>;
@@ -29,7 +29,11 @@ const moduleFields: Record<ModuleTypes, FlattenKeys<RootState>[]> = {
     "task.taskModalTable",
     "task.searchText"
   ],
-  setting: ['setting', 'setting.showTabBar', 'setting.theme']
+  setting: [
+    'setting',
+    'setting.showTabBar',
+    'setting.theme',
+    'setting.accentColor']
 };
 
 const _getters = (state: RootState): GettersType =>
@@ -101,7 +105,7 @@ const select = <T extends FlattenKeys<RootState>>(path: T) =>
   ) as DeepType<RootState, T>;
 
 export default function useStore() {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const getters = new Proxy({} as GettersType, {
     get: function (_target, module: ModuleTypes, _receiver) {
       let state: DeepPartial<RootState> = buildState(moduleFields[module]);
@@ -109,7 +113,7 @@ export default function useStore() {
     },
   });
 
-  const actions = _actions(dispatch); 
+  const actions = _actions(dispatch);
 
   return [getters, actions, select] as const;
 }

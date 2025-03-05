@@ -21,30 +21,34 @@ Notifications.setNotificationHandler({
 });
 
 async function registerForPushNotificationsAsync() {
-  if (!Device.isDevice) {
-    alert("As notificações só funcionam em dispositivos físicos.");
-    return;
+  try {
+    if (!Device.isDevice) {
+      alert("As notificações só funcionam em dispositivos físicos.");
+      return;
+    }
+
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== "granted") {
+      alert("Você precisa permitir notificações para receber alertas de tarefas!");
+      return;
+    }
+
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log("Expo Push Token:", token);
+
+    return token;
+  } catch (error) {
+    console.error("Erro ao registrar notificações:", error);
   }
-
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-
-  if (existingStatus !== "granted") {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-  }
-
-  if (finalStatus !== "granted") {
-    alert("Você precisa permitir notificações para receber alertas de tarefas!");
-    return;
-  }
-
-  // ✅ Obtém o token de notificação (caso precise para notificações push no futuro)
-  const token = (await Notifications.getExpoPushTokenAsync()).data;
-  console.log("Expo Push Token:", token);
-
-  return token;
 }
+
 
 // ✅ Função para cancelar notificações ao serem clicadas
 async function cancelNotification(notificationId: string) {

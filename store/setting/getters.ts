@@ -4,10 +4,11 @@ import { getDefaultSettingItem } from "./utils";
 export const getSetting =
   (state: RootState) =>
   <T extends FlattenKeys<SettingState>>(field: T) =>
-    getNestedField(state.task, field);
+    getNestedField(state.setting, field);
 
 
-  export const getSettingItem = (state: RootState) => (): SettingItem => {
-    const { items, selectedItemIndex } = state.task;
-    return items[selectedItemIndex] ?? getDefaultSettingItem();
-  };
+  // export const getSettingItem = (state: RootState) => (): SettingItem => {
+  //   const { items
+  //    } = state.setting;
+  //   return items[selectedItemIndex] ?? getDefaultSettingItem();
+  // };

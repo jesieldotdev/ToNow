@@ -2,25 +2,39 @@
 export const colors = require("tailwindcss/colors");
 
 module.exports = {
-  presets: [require("nativewind/preset")], // 🔥 Certifique-se de usar este preset!
+
+  presets: [require("nativewind/preset")], 
   content: [
     "./App.{js,jsx,ts,tsx}",
     "./screens/**/*.{js,jsx,ts,tsx}",
     "./components/**/*.{js,jsx,ts,tsx}",
   ],
+  safelist: [
+    "text-primary-500",
+    "text-secondary-500",
+    "text-thirth-500",
+    "bg-primary-500",
+    "bg-secondary-500",
+    "bg-thirth-500",
+  ],
   theme: {
     extend: {
       colors: {
-        primary: colors.blue[500],
-        secondary: colors.red[500],
+        // Tema padrão
+        primary: '#3b82f6',
+        secondary: colors.rose[500],
+        thirth: colors.orange[500],
         bgLight: colors.white,
         bgDark: "#282828",
-        textPrimaryLight: colors.black,
-        textPrimaryDark: colors.gray[200],
-        textSecondaryLight: colors.gray[500],
-        textSecondaryDark: colors.gray[200],
+        textPrimaryLight: "#2A2A2A",
+        textPrimaryDark: "#E0E0E0",
+        textSecondaryLight: "#4B5563",
+        textSecondaryDark: "#A1A1AA",
         cardLight: colors.gray[100],
         cardDark: "#363636",
+        cardSecondaryLight: "#E5E7EB",
+        cardSecondaryDark: "#323232",
+
       },
     },
   },
