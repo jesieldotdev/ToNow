@@ -1,8 +1,10 @@
-import React from "react";
-import { Image, View } from "react-native";
-import CustomText from "./CustomText";
-import useStore from "hooks/useStore";
-import { getTailwindClass } from "store/setting/utils";
+import useStore from 'hooks/useStore';
+import React, { useEffect } from 'react';
+import { Image, View } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
+import { getTailwindClass } from 'store/setting/utils';
+
+import CustomText from './CustomText';
 
 interface EventProps {
   time: Time;
@@ -12,68 +14,102 @@ interface EventProps {
   participants?: string[];
 }
 
-const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted, participants }:EventProps) => {
-  const [,,select] = useStore()
-  const theme = select('setting.theme'); 
-  const accent = select('setting.accentColor'); 
+const EventItem: React.FC<EventProps> = ({
+  time,
+  title,
+  description,
+  isHighlighted,
+  participants,
+}) => {
+  const [, , select] = useStore();
+  const theme = select('setting.theme');
+  const accent = select('setting.accentColor');
 
-  
   const displayedDescription = description && description.trim().length > 0 ? description : title;
 
   return (
-    <View className="mb-6 flex-row items-center relative">
+    <Animated.View
+      entering={FadeInUp.duration(500).springify()}
+      className='relative mb-6 flex-row items-center'
+    >
       {/* Indicador de Evento */}
       <View
-        className={`border-2 ${theme === 'dark' ? 'bg-bgDark': 'bg-bgLight'}
-          ${isHighlighted ? " w-8 h-8 -left-[25px]" : " w-5 h-5 -left-[20px]"}
-          rounded-full absolute top-0 flex items-center justify-center ${getTailwindClass(accent, 'border')}
-        `}
+        className={`border-2 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'} ${
+          isHighlighted ? '-left-[25px] h-8 w-8' : '-left-[20px] h-5 w-5'
+        } absolute top-0 flex items-center justify-center rounded-full ${getTailwindClass(
+          accent,
+          'border'
+        )} `}
       >
-        {isHighlighted && <View className={`w-5 h-5 ${getTailwindClass(accent, 'bg')} rounded-full`} />}
+        {isHighlighted && (
+          <View className={`h-5 w-5 ${getTailwindClass(accent, 'bg')} rounded-full`} />
+        )}
       </View>
 
       {/* Container Principal */}
       <View
-        className={`ml-6 flex-1 p-5 rounded-xl drop-shadow-lg
-          ${isHighlighted ? getTailwindClass(accent, 'bg') : theme === "dark" ? "bg-cardDark" : "bg-cardLight"}
-        `}
+        className={`ml-6 flex-1 rounded-xl p-5 drop-shadow-lg ${
+          isHighlighted
+            ? getTailwindClass(accent, 'bg')
+            : theme === 'dark'
+              ? 'bg-cardDark'
+              : 'bg-cardLight'
+        } `}
       >
-        <View className="flex flex-row justify-between">
+        <View className='flex flex-row justify-between'>
           {description ? (
             <CustomText
-              variant="bold"
-              className={`text-xl ${isHighlighted ? "text-white" : theme === "dark" ? "text-textPrimaryDark" : "text-textPrimaryLight"}`}
+              variant='bold'
+              className={`text-xl ${
+                isHighlighted
+                  ? 'text-white'
+                  : theme === 'dark'
+                    ? 'text-textPrimaryDark'
+                    : 'text-textPrimaryLight'
+              }`}
             >
               {title}
             </CustomText>
           ) : null}
           <CustomText
-            variant="semiBold"
-            className={`text-sm mb-1 ${isHighlighted ? "text-white" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}`}
+            variant='semiBold'
+            className={`mb-1 text-sm ${
+              isHighlighted
+                ? 'text-white'
+                : theme === 'dark'
+                  ? 'text-textSecondaryDark'
+                  : 'text-textSecondaryLight'
+            }`}
           >
             {time.hour}
           </CustomText>
         </View>
 
         <CustomText
-          variant="regular"
-          className={`text-base mt-1 ${isHighlighted ? "text-white" : theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}`}
+          variant='regular'
+          className={`mt-1 text-base ${
+            isHighlighted
+              ? 'text-white'
+              : theme === 'dark'
+                ? 'text-textSecondaryDark'
+                : 'text-textSecondaryLight'
+          }`}
         >
           {displayedDescription}
         </CustomText>
 
         {/* Lista de Participantes */}
         {participants?.length ? (
-          <View className="flex flex-row gap-1 mt-2">
+          <View className='mt-2 flex flex-row gap-1'>
             {participants.map((item, index) => (
-              <View key={index} className="p-0.5 bg-bgLight dark:bg-bgDark rounded-full">
-                <Image source={{ uri: item }} className="w-8 h-8 rounded-full" resizeMode="cover" />
+              <View key={index} className='rounded-full bg-bgLight p-0.5 dark:bg-bgDark'>
+                <Image source={{ uri: item }} className='h-8 w-8 rounded-full' resizeMode='cover' />
               </View>
             ))}
           </View>
         ) : null}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

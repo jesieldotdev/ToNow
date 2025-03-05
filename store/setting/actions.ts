@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import colors from 'tailwindcss/colors';
 
 import { setSetting as setSettingSetting } from './reducer';
 import { themes } from './state';
@@ -86,4 +87,14 @@ export const toggleTheme = (getState: () => RootState, actions: ActionsType) => 
   const newMode = state.setting.theme === 'light' ? 'dark' : 'light';
   setSetting('theme', newMode);
   setSetting('colors', themes[newMode]);
+};
+
+export const getBgHexa = (getState: () => RootState) => (): string => {
+  const mode = getState();
+  switch (mode.setting.theme) {
+    case 'dark':
+      return colors.gray[900];
+    case 'light':
+      return colors.gray[100];
+  }
 };

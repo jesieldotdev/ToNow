@@ -57,6 +57,8 @@ export const getHexaColorTailwind = (accent: AccentColor) => {
   }
 };
 
+
+
 export const getTailwindClass = (colorKey: string, type: 'text' | 'bg' | 'border') => {
   const colorMapping: Record<string, string> = {
     primary: 'primary',

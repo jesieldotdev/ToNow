@@ -3,9 +3,9 @@ import useStore from 'hooks/useStore';
 import React from 'react';
 import { View } from 'react-native';
 
-export const Container = ({ children }: { children: React.ReactNode }) => {
+export const Container = ({ children, className='' }: { children: React.ReactNode, className: string }) => {
   const { background } = useTheme();
   console.log(background);
 
-  return <View className={`flex-1 px-6 pt-12 ${background}`}>{children}</View>;
+  return <View className={` ${background} ${className}`}>{children}</View>;
 };
