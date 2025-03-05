@@ -32,7 +32,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
       `}
     >
       {/* Botão Home */}
-      <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+      <TouchableOpacity className="p-4 px-6" onPress={() => navigation.navigate("Home")}>
         <FontAwesome
           name="clock-o"
           size={24}
@@ -49,7 +49,7 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
       </TouchableOpacity>
 
       {/* Botão Perfil */}
-      <TouchableOpacity onPress={() => navigation.navigate("Perfil")}>
+      <TouchableOpacity className="p-4 px-6" onPress={() => navigation.navigate("Perfil")}>
         <FontAwesome
           name="user"
           size={24}
