@@ -1,6 +1,5 @@
 import { AxiosResponse } from "axios";
 import { setSetting as setSettingSetting } from "./reducer";
-import { stringify } from "querystring";
 
 interface Response {
   message: string;
@@ -84,3 +83,5 @@ export const addSettingItem =
 
       setSetting("items", [...currentSettings, newSetting]); // Adiciona a nova tarefa ao array
     };
+
+
