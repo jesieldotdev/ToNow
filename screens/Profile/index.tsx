@@ -12,7 +12,7 @@ import { accentColors } from "store/setting/utils";
 
 const ProfileScreen = () => {
   const [, actions, select] = useStore();
-  const { setting: { setSetting } } = actions;
+  const { setting: { setSetting, toggleTheme } } = actions;
 
   const theme = useSelector((state: RootState) => state.setting.theme);
   const accentColor = useSelector((state: RootState) => state.setting.accentColor);
@@ -88,7 +88,7 @@ const ProfileScreen = () => {
           </CustomText>
           <Switch
             value={theme === "dark"}
-            onValueChange={() => setSetting('theme' , theme === "dark" ? "light" : "dark")}
+            onValueChange={() => toggleTheme()}
           />
         </View>
 

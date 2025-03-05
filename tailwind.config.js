@@ -2,7 +2,6 @@
 export const colors = require("tailwindcss/colors");
 
 module.exports = {
-
   presets: [require("nativewind/preset")], 
   content: [
     "./App.{js,jsx,ts,tsx}",
@@ -21,20 +20,19 @@ module.exports = {
     extend: {
       colors: {
         // Tema padrão
-        primary: '#3b82f6',
-        secondary: colors.rose[500],
-        thirth: colors.orange[500],
-        bgLight: colors.white,
-        bgDark: "#282828",
-        textPrimaryLight: "#2A2A2A",
-        textPrimaryDark: "#E0E0E0",
-        textSecondaryLight: "#4B5563",
-        textSecondaryDark: "#A1A1AA",
-        cardLight: colors.gray[100],
-        cardDark: "#363636",
-        cardSecondaryLight: "#E5E7EB",
-        cardSecondaryDark: "#323232",
-
+        primary: colors.blue[500], // Azul semelhante ao #3b82f6
+        secondary: colors.rose[500], // Já estava correto
+        thirth: colors.orange[500], // Já estava correto
+        bgLight: colors.white, // Já estava correto
+        bgDark: colors.gray[800], // Aproximado de #282828
+        textPrimaryLight: colors.gray[800], // Aproximado de #2A2A2A
+        textPrimaryDark: colors.gray[200], // Aproximado de #E0E0E0
+        textSecondaryLight: colors.gray[600], // Aproximado de #4B5563
+        textSecondaryDark: colors.gray[400], // Aproximado de #A1A1AA
+        cardLight: colors.gray[100], // Já estava correto
+        cardDark: colors.gray[700], // Aproximado de #363636
+        cardSecondaryLight: colors.gray[200], // Aproximado de #E5E7EB
+        cardSecondaryDark: colors.gray[700], // Aproximado de #323232
       },
     },
   },

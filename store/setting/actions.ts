@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { setSetting as setSettingSetting } from "./reducer";
+import { themes } from "./state";
 
 interface Response {
   message: string;
@@ -79,9 +80,24 @@ export const addSettingItem =
       } = actions;
 
       const state = getState();
-      const currentSettings = state.setting.items || []; // Garante que o array existe
+      const currentSettings = state.setting.items || []; 
 
-      setSetting("items", [...currentSettings, newSetting]); // Adiciona a nova tarefa ao array
+      setSetting("items", [...currentSettings, newSetting]); 
     };
 
 
+
+export const toggleTheme = (getState: () => RootState, actions: ActionsType) =>
+  (): void => {
+    const {
+      setting: {  },
+    } = actions;
+
+    console.log('1')
+
+    const state = getState()
+
+    const newMode = state.setting.theme === 'light' ? 'dark' : 'light';
+    state.setting.theme = newMode;
+    state.setting.colors = themes[newMode]; 
+  }

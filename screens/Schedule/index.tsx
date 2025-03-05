@@ -59,7 +59,7 @@ const Schedule = () => {
     }
 
     return (
-        <Container theme={theme}>
+        <Container>
             {/* Data Atual */}
             <CustomText variant="medium" className={`text-lg ${theme === "dark" ? "text-textSecondaryDark" : "text-textSecondaryLight"}`}>
                 {today.toLocaleDateString("en-US", { month: "long" })} {today.getDate()}, {today.getFullYear()}
