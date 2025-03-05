@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import { cancelNotification, registerForPushNotificationsAsync } from 'store/setting/utils';
 
 import Store from './store';
+import { I18nextProvider } from 'react-i18next';
+import i18n from 'locales/i18n';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -39,9 +41,11 @@ export default function App() {
 
   return (
     <Store>
-      <PaperProvider>
-        <AppContent />
-      </PaperProvider>
+      <I18nextProvider i18n={i18n}>
+        <PaperProvider>
+          <AppContent />
+        </PaperProvider>
+      </I18nextProvider>
     </Store>
   );
 }

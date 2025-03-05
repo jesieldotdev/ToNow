@@ -1,8 +1,51 @@
 {
-    "welcome": "Bem-vindo ao app!",
-    "profile": "Perfil",
-    "settings": "Configurações",
-    "logout": "Sair",
-    "language": "Idioma"
-  }
-  
+  "profile": "Perfil",
+  "username": "Nome do Usuário",
+  "email": "email@exemplo.com",
+  "changePassword": "Alterar Senha",
+  "notifications": "Notificações",
+  "darkMode": "Modo Escuro",
+  "language": "Idioma",
+  "changeLanguage": "Mudar Idioma",
+  "colorTheme": "Cor Principal",
+  "deleteData": "Apagar Dados",
+  "deleteDataConfirm": "Tem certeza que deseja apagar todos os dados? Essa ação não pode ser desfeita.",
+  "deleteDataSuccess": "Sucesso! Os dados foram apagados. O app será reiniciado.",
+  "logout": "Sair",
+  "cancel": "Cancelar",
+  "confirmDelete": "Apagar",
+  "english": "Inglês",
+  "portuguese": "Português",
+
+  "today": "Hoje",
+  "noEvents": "Nenhum evento para este dia.",
+  "monthJanuary": "Janeiro",
+  "monthFebruary": "Fevereiro",
+  "monthMarch": "Março",
+  "monthApril": "Abril",
+  "monthMay": "Maio",
+  "monthJune": "Junho",
+  "monthJuly": "Julho",
+  "monthAugust": "Agosto",
+  "monthSeptember": "Setembro",
+  "monthOctober": "Outubro",
+  "monthNovember": "Novembro",
+  "monthDecember": "Dezembro",
+  "days": {
+    "sun": "Dom",
+    "mon": "Seg",
+    "tue": "Ter",
+    "wed": "Qua",
+    "thu": "Qui",
+    "fri": "Sex",
+    "sat": "Sáb"
+  },
+
+    "addTask": "Adicionar Tarefa",
+    "addNewTask": "📝 Adicionar Nova Tarefa",
+    "titlePlaceholder": "Título",
+    "descriptionPlaceholder": "Descrição",
+    "date": "Data",
+    "time": "Hora"
+    
+}

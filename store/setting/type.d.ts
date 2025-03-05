@@ -1,3 +1,4 @@
+
 type SettingState = {
   showTabBar: boolean;
   theme: Theme;
@@ -20,3 +21,4 @@ type Palette = {
 };
 
 type AvailableLanguages = "en" | "pt";
+

@@ -17,6 +17,7 @@ import { getTailwindClass } from 'store/setting/utils';
 import CustomText from './CustomText';
 import DatePickerModal from './DatePicker';
 import CustomTimePicker from './TimePicker';
+import { t } from 'i18next';
 
 const CreateEvent = () => {
   const [, actions, select] = useStore();
@@ -121,7 +122,7 @@ const CreateEvent = () => {
             variant='bold'
             className={`mb-4 text-center text-xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            📝 Add New Task
+            {t('newTask')}
           </CustomText>
 
           <View className='mb-4'>

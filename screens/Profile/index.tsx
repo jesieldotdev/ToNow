@@ -5,7 +5,6 @@ import * as Updates from 'expo-updates';
 import { useTheme } from 'hooks/themeProvider';
 import useStore from 'hooks/useStore';
 import { LogOut } from 'lucide-react-native';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, Image, TouchableOpacity, Switch, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -36,28 +35,22 @@ const ProfileScreen = () => {
   }
 
   function handleClearData() {
-    Alert.alert(
-      'Confirmação',
-      'Tem certeza que deseja apagar todos os dados? Essa ação não pode ser desfeita.',
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Apagar',
-          style: 'destructive',
-          onPress: async () => {
-            console.log('Apagando dados persistidos');
-            await persistStore(store).purge();
-            Alert.alert('Sucesso', 'Os dados foram apagados. O app será reiniciado.');
-            setTimeout(() => {
-              Updates.reloadAsync();
-            }, 1000);
-          },
+    Alert.alert(t('deleteData'), t('deleteDataConfirm'), [
+      { text: t('cancel'), style: 'cancel' },
+      {
+        text: t('confirmDelete'),
+        style: 'destructive',
+        onPress: async () => {
+          console.log('Apagando dados persistidos');
+          await persistStore(store).purge();
+          Alert.alert(t('deleteDataSuccess'));
+          setTimeout(() => {
+            Updates.reloadAsync();
+          }, 1000);
         },
-      ]
-    );
+      },
+    ]);
   }
-
-console.log(t('language'))
 
   return (
     <View className={`flex-1 px-6 pt-12 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
@@ -65,7 +58,7 @@ console.log(t('language'))
         variant='bold'
         className={`mb-6 text-2xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
       >
-        Perfil
+        {t('profile')}
       </CustomText>
 
       <View className='mb-6 items-center'>
@@ -77,13 +70,13 @@ console.log(t('language'))
           variant='bold'
           className={`mt-3 text-xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
         >
-          Nome do Usuário
+          {t('username')}
         </CustomText>
         <CustomText
           variant='regular'
           className={`mt-1 text-sm ${theme === 'dark' ? 'text-textSecondaryDark' : 'text-textSecondaryLight'}`}
         >
-          email@exemplo.com
+          {t('email')}
         </CustomText>
       </View>
 
@@ -95,7 +88,7 @@ console.log(t('language'))
             variant='medium'
             className={`text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            Alterar Senha
+            {t('changePassword')}
           </CustomText>
           <AntDesign name='right' size={18} color={theme === 'dark' ? '#E5E7EB' : 'gray'} />
         </TouchableOpacity>
@@ -105,7 +98,7 @@ console.log(t('language'))
             variant='medium'
             className={`text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            Notificações
+            {t('notifications')}
           </CustomText>
           <AntDesign name='right' size={18} color={theme === 'dark' ? '#E5E7EB' : 'gray'} />
         </TouchableOpacity>
@@ -115,7 +108,7 @@ console.log(t('language'))
             variant='medium'
             className={`text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            Modo Escuro
+            {t('darkMode')}
           </CustomText>
           <Switch
             thumbColor={getHexaColorTailwind(accentColor)}
@@ -135,24 +128,20 @@ console.log(t('language'))
           >
             {t('language')}
           </CustomText>
-          <View className='flex-row items-center'>
-            <CustomText
-              variant='medium'
-              className={`text-lg mr-2 ${theme === 'dark' ? 'text-textSecondaryDark' : 'text-textSecondaryLight'}`}
-            >
-              {language === 'en' ? 'English' : 'Português'}
-            </CustomText>
-            <AntDesign name='right' size={18} color={theme === 'dark' ? '#E5E7EB' : 'gray'} />
-          </View>
+          <CustomText
+            variant='medium'
+            className={`mr-2 text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
+          >
+            {language === 'en' ? t('english') : t('portuguese')}
+          </CustomText>
         </TouchableOpacity>
 
-        {/* Seleção de Cor Primária */}
         <View className='p-4'>
           <CustomText
             variant='medium'
             className={`mb-2 text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            Cor Principal
+            {t('colorTheme')}
           </CustomText>
           <View className='w-32 flex-row justify-between'>
             {accentColors.map((color) => (
@@ -167,22 +156,25 @@ console.log(t('language'))
       </View>
 
       <TouchableOpacity
-        className={`mt-6 flex-row items-center justify-center rounded-xl p-4 shadow-lg active:opacity-80 ${getTailwindClass(accentColor, 'bg')}`}
+        className='mt-6 flex-row items-center justify-center rounded-xl bg-red-500 p-4 shadow-lg'
         onPress={handleClearData}
       >
         <Feather name='trash-2' size={20} color='white' />
         <CustomText variant='bold' className='ml-2 text-lg text-white'>
-          Apagar Dados
+          {t('deleteData')}
         </CustomText>
       </TouchableOpacity>
 
       <TouchableOpacity
-        className={`mt-6 flex-row items-center justify-center rounded-xl border p-4 shadow-lg active:opacity-80 ${background} ${textPrimary}`}
+        className='mt-6 flex-row items-center justify-center rounded-xl border p-4 shadow-lg'
         onPress={handleLogout}
       >
         <LogOut color={getHexaColorTailwind(accentColor)} />
-        <CustomText variant='bold' className={`${textPrimary} ml-2 text-lg`}>
-          Sair
+        <CustomText
+          variant='bold'
+          className={`ml-2 text-lg ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
+        >
+          {t('logout')}
         </CustomText>
       </TouchableOpacity>
     </View>
