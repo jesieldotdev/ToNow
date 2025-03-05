@@ -48,7 +48,7 @@ const Schedule = () => {
 
   const filteredTasks = tasks.filter((event) => event.time.date.day.value === selectedDay);
 
-  function isHighlighted(task) {
+  function isHighlighted(task: TaskItem) {
     return parseInt(task.time.hour.split(':')[0]) === currentHour;
   }
 
@@ -70,7 +70,10 @@ const Schedule = () => {
 
       <DayOfWeek selectedDay={selectedDay} setSelectedDay={setSelectedDay} days={days} />
 
-      <ScrollView className='relative pl-8'>
+      <ScrollView
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        className='relative pl-8' >
         <View
           className={`absolute bottom-32 left-[-12px] top-0 w-[2px] ${getTailwindClass(accent, 'bg')}`}
         />
@@ -95,7 +98,7 @@ const Schedule = () => {
           </CustomText>
         )}
 
-        <View className='h-24' />
+        <View className='h-[250px]' />
       </ScrollView>
 
       <CreateEvent />
