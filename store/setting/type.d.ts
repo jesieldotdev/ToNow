@@ -5,8 +5,9 @@ type SettingState = {
   colors: Palette;
 };
 
+type SettingItem = object;
 
-type AccentColor = 'primary' | 'secondary' | 'thirth';
+type AccentColor = 'primary' | 'secondary' | 'third';
 type Theme = 'dark' | 'light';
 
 type Palette = {

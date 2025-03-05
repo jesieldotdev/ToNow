@@ -9,13 +9,18 @@ import { persistStore } from "redux-persist";
 import { store } from "store";
 import * as Updates from "expo-updates";
 import { accentColors } from "store/setting/utils";
+import { getHexaColorTailwind, getTailwindClass } from "store/setting/utils";
+import { useTheme } from "hooks/themeProvider";
+import { LogOut } from "lucide-react-native";
 
 const ProfileScreen = () => {
   const [, actions, select] = useStore();
   const { setting: { setSetting, toggleTheme } } = actions;
+  const {background, textPrimary} = useTheme()
 
   const theme = useSelector((state: RootState) => state.setting.theme);
-  const accentColor = useSelector((state: RootState) => state.setting.accentColor);
+  const accentColor = select('setting.accentColor');
+  const colors = select('setting.colors');
   const navigation = useNavigation();
 
   function handleLogout() {
@@ -48,6 +53,7 @@ const ProfileScreen = () => {
     );
   }
 
+
   return (
     <View className={`flex-1 px-6 pt-12 ${theme === "dark" ? "bg-bgDark" : "bg-bgLight"}`}>
       <CustomText variant="bold" className={`text-2xl mb-6 ${theme === "dark" ? "text-textPrimaryDark" : "text-textPrimaryLight"}`}>
@@ -57,7 +63,7 @@ const ProfileScreen = () => {
       <View className="items-center mb-6">
         <Image
           source={{ uri: "https://i.pravatar.cc/150" }}
-          className="w-24 h-24 rounded-full border-4 border-primary"
+          className={`w-24 h-24 rounded-full border-4 ${getTailwindClass(accentColor, 'border')}`}
         />
         <CustomText variant="bold" className={`text-xl mt-3 ${theme === "dark" ? "text-textPrimaryDark" : "text-textPrimaryLight"}`}>
           Nome do Usuário
@@ -87,6 +93,7 @@ const ProfileScreen = () => {
             Modo Escuro
           </CustomText>
           <Switch
+            thumbColor={getHexaColorTailwind(accentColor)}
             value={theme === "dark"}
             onValueChange={() => toggleTheme()}
           />
@@ -101,8 +108,11 @@ const ProfileScreen = () => {
             {accentColors.map(color => (
               <TouchableOpacity
                 key={color}
-                onPress={() => setSetting("accentColor", color)}
-                className={`w-10 h-10 rounded-full bg-${color} ${accentColor === color ? "border-4 border-primary" : "border border-gray-400"}`}
+                onPress={() => {
+                  console.log(color)
+                  
+                  setSetting("accentColor", color)}}
+                className={`w-10 h-10 rounded-full ${getTailwindClass(color, 'bg')} ${accentColor === color ? `border-2 border-white` : ""}`}
                 // style={{ backgroundColor: color }}
               />
             ))}
@@ -111,7 +121,7 @@ const ProfileScreen = () => {
       </View>
 
       <TouchableOpacity
-        className="flex-row items-center justify-center bg-yellow-500 p-4 rounded-xl mt-6 shadow-lg active:opacity-80"
+        className={`flex-row items-center justify-center p-4 rounded-xl mt-6 shadow-lg active:opacity-80 ${getTailwindClass(accentColor, 'bg')}`}
         onPress={handleClearData}
       >
         <Feather name="trash-2" size={20} color="white" />
@@ -121,11 +131,11 @@ const ProfileScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        className="flex-row items-center justify-center border border-cardSecondaryLight p-4 rounded-xl mt-6 shadow-lg active:opacity-80"
+        className={`flex-row items-center justify-center border  p-4 rounded-xl mt-6 shadow-lg active:opacity-80 ${background} ${textPrimary}`}
         onPress={handleLogout}
       >
-        <Feather name="log-out" size={20} color="white" />
-        <CustomText variant="bold" className="text-white text-lg ml-2">
+        <LogOut color={getHexaColorTailwind(accentColor)} />
+        <CustomText variant="bold" className={`${textPrimary}  text-lg ml-2`}>
           Sair
         </CustomText>
       </TouchableOpacity>

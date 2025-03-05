@@ -1,6 +1,10 @@
 import { useSelector } from 'react-redux';
+import { themes } from 'store/setting/state';
 
-export function useTheme(): Palette {
-  const colors = useSelector((state: RootState) => state.setting.colors);
-  return colors;
+import useStore from './useStore';
+
+export function useTheme() {
+  const [, , select] = useStore();
+  const theme = select('setting.theme'); // 🔥 Atualiza quando o Redux muda
+  return themes[theme];
 }

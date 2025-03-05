@@ -34,6 +34,7 @@ const CustomTimePicker: React.FC<TimePickerProps> = ({ visible, onClose, selecte
     <View style={styles.container}>
       <TimePickerModal
         visible={open}
+        use24HourClock
         onDismiss={handleDismiss}
         onConfirm={handleConfirm}
         hours={hour}

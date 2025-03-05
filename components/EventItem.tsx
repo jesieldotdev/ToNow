@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, View } from "react-native";
 import CustomText from "./CustomText";
-import { useSelector } from "react-redux";
-import { RootState } from "store";
+import useStore from "hooks/useStore";
+import { getTailwindClass } from "store/setting/utils";
 
 interface EventProps {
   time: Time;
@@ -13,7 +13,9 @@ interface EventProps {
 }
 
 const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlighted, participants }:EventProps) => {
-  const theme = useSelector((state: RootState) => state.setting.theme); 
+  const [,,select] = useStore()
+  const theme = select('setting.theme'); 
+  const accent = select('setting.accentColor'); 
 
   
   const displayedDescription = description && description.trim().length > 0 ? description : title;
@@ -23,17 +25,17 @@ const EventItem: React.FC<EventProps> = ({ time, title, description, isHighlight
       {/* Indicador de Evento */}
       <View
         className={`border-2 ${theme === 'dark' ? 'bg-bgDark': 'bg-bgLight'}
-          ${isHighlighted ? "border-primary w-8 h-8 -left-[25px]" : "border-primary w-5 h-5 -left-[20px]"}
-          rounded-full absolute top-0 flex items-center justify-center
+          ${isHighlighted ? " w-8 h-8 -left-[25px]" : " w-5 h-5 -left-[20px]"}
+          rounded-full absolute top-0 flex items-center justify-center ${getTailwindClass(accent, 'border')}
         `}
       >
-        {isHighlighted && <View className="w-5 h-5 bg-primary rounded-full" />}
+        {isHighlighted && <View className={`w-5 h-5 ${getTailwindClass(accent, 'bg')} rounded-full`} />}
       </View>
 
       {/* Container Principal */}
       <View
         className={`ml-6 flex-1 p-5 rounded-xl drop-shadow-lg
-          ${isHighlighted ? "bg-primary" : theme === "dark" ? "bg-cardDark" : "bg-cardLight"}
+          ${isHighlighted ? getTailwindClass(accent, 'bg') : theme === "dark" ? "bg-cardDark" : "bg-cardLight"}
         `}
       >
         <View className="flex flex-row justify-between">

@@ -5,9 +5,9 @@ import CustomText from "./CustomText";
 import { AntDesign } from "@expo/vector-icons";
 import useStore from "hooks/useStore";
 import { useSelector } from "react-redux";
-import { RootState } from "store";
 import DatePickerModal from "./DatePicker";
 import CustomTimePicker from "./TimePicker";
+import { getTailwindClass } from "store/setting/utils";
 
 const CreateEvent = () => {
     const [, actions, select] = useStore();
@@ -18,7 +18,8 @@ const CreateEvent = () => {
         }
     } = actions;
 
-    const theme = useSelector((state: RootState) => state.setting.theme);
+    const theme = select('setting.theme');
+    const accent = select('setting.accentColor');
     const visible = select("task.taskModalTable");
     const setIsOpen = () => setTask("taskModalTable", !visible);
 
@@ -157,7 +158,7 @@ const CreateEvent = () => {
 
                     {/* 🔥 Botão de Adicionar Tarefa */}
                     <TouchableOpacity
-                        className="p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4 bg-primary"
+                        className={`p-4 rounded-lg items-center shadow-md active:opacity-80 mt-4 ${getTailwindClass(accent, 'bg')}`}
                         onPress={handleAddEvent}
                     >
                         <CustomText variant="bold" className="text-white text-lg">

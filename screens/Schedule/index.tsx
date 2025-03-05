@@ -8,6 +8,7 @@ import useStore from "hooks/useStore";
 import CreateEvent from "components/CreateTodo";
 import { sortTasks, sortTasksByNearestTime } from "store/task/utils";
 import { scheduleTaskNotification } from "components/Notifications";
+import { getTailwindClass } from "store/setting/utils";
 
 interface ScheduleProps {
     tasks: TaskItem[];
@@ -24,6 +25,7 @@ const Schedule = () => {
 
     const tasks = sortTasks(select("task.items"))
     const theme = select("setting.theme");
+    const accent = select("setting.accentColor");
 
     console.log(tasks)
 
@@ -73,7 +75,7 @@ const Schedule = () => {
 
             {/* Linha de Tempo */}
             <ScrollView className="relative pl-8 ">
-                <View className={`absolute top-0 left-[-12px] bottom-32 w-[2px] ${theme === "dark" ? "bg-primary" : "bg-primary"}`} />
+                <View className={`absolute top-0 left-[-12px] bottom-32 w-[2px] ${getTailwindClass(accent, 'bg')}`} />
                 
                 {/* Lista de Eventos */}
                 {filteredTasks.length > 0 ? (

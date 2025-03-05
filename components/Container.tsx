@@ -4,12 +4,8 @@ import React from 'react';
 import { View } from 'react-native';
 
 export const Container = ({ children }: { children: React.ReactNode }) => {
-  
-  const [, , select] = useStore();
-  const theme = select('setting.theme');
-  return (
-    <View className={`flex-1 px-6 pt-12 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
-      {children}
-    </View>
-  );
+  const { background } = useTheme();
+  console.log(background);
+
+  return <View className={`flex-1 px-6 pt-12 ${background}`}>{children}</View>;
 };
