@@ -46,7 +46,6 @@ export async function cancelNotification(notificationId: string) {
 }
 
 export const getHexaColorTailwind = (accent: AccentColor) => {
-  console.log(accent);
   switch (accent) {
     case 'primary':
       return colors.rose[500];

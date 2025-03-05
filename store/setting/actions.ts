@@ -82,8 +82,6 @@ export const toggleTheme = (getState: () => RootState, actions: ActionsType) => 
   } = actions;
 
   const state = getState();
-  console.log('1');
-  console.log(state.setting.theme);
   const newMode = state.setting.theme === 'light' ? 'dark' : 'light';
   setSetting('theme', newMode);
   setSetting('colors', themes[newMode]);
@@ -98,3 +96,14 @@ export const getBgHexa = (getState: () => RootState) => (): string => {
       return colors.gray[100];
   }
 };
+
+export const changeLanguage =
+  (getState: () => RootState, actions: ActionsType) =>
+  (language: AvailableLanguages): void => {
+    const {
+      setting: { setSetting },
+    } = actions;
+    const state = getState();
+    if (state.setting.language === language) return;
+    setSetting('language', language);
+  };

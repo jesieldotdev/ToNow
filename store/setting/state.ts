@@ -3,6 +3,7 @@ export const initialSettingState = (): SettingState => ({
   theme: 'dark',
   accentColor: 'secondary',
   colors: themes.dark,
+  language: 'en'
 });
 
 export const themes = {

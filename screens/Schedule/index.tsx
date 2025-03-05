@@ -60,6 +60,8 @@ const Schedule = () => {
     return parseInt(task.time.hour.split(':')[0]) === currentHour;
   }
 
+  
+
   return (
     <Container className='px-6 pt-12'>
       <CustomText

@@ -19,11 +19,6 @@ interface DayOfWeekProps {
 export const DayOfWeek = ({ days, selectedDay, setSelectedDay }: DayOfWeekProps) => {
   const theme = useSelector((state: RootState) => state.setting.theme); 
   const accent = useSelector((state: RootState) => state.setting.accentColor); 
-//   const {} = useTheme()
-
-
-
-//   console.log(textHighlight)
 
   return (
     <View className='mb-4 flex-row items-center justify-between pb-2'>

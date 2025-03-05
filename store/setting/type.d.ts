@@ -3,6 +3,7 @@ type SettingState = {
   theme: Theme;
   accentColor: AccentColor;
   colors: Palette;
+  language: AvailableLanguages
 };
 
 type SettingItem = object;
@@ -17,3 +18,5 @@ type Palette = {
   button: string;
   buttonText: string;
 };
+
+type AvailableLanguages = "en" | "pt";
