@@ -102,7 +102,7 @@ const ProfileScreen = () => {
               <TouchableOpacity
                 key={color}
                 onPress={() => setSetting("accentColor", color)}
-                className={`w-10 h-10 rounded-full bg-[] ${accentColor === color ? "border-4 border-primary" : "border border-gray-400"}`}
+                className={`w-10 h-10 rounded-full bg-${color} ${accentColor === color ? "border-4 border-primary" : "border border-gray-400"}`}
                 // style={{ backgroundColor: color }}
               />
             ))}
@@ -121,7 +121,7 @@ const ProfileScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        className="flex-row items-center justify-center bg-red-500 p-4 rounded-xl mt-6 shadow-lg active:opacity-80"
+        className="flex-row items-center justify-center border border-cardSecondaryLight p-4 rounded-xl mt-6 shadow-lg active:opacity-80"
         onPress={handleLogout}
       >
         <Feather name="log-out" size={20} color="white" />
