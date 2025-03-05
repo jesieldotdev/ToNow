@@ -1,6 +1,8 @@
 import { AntDesign } from '@expo/vector-icons';
 import * as NavigationBar from 'expo-navigation-bar';
 import useStore from 'hooks/useStore';
+import { p } from 'hooks/useTranslationHelper';
+import { t } from 'i18next';
 import { useState, useEffect, useRef } from 'react';
 import {
   View,
@@ -9,7 +11,7 @@ import {
   Modal,
   Animated,
   Pressable,
-  Easing,
+  Easing
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getTailwindClass } from 'store/setting/utils';
@@ -17,12 +19,12 @@ import { getTailwindClass } from 'store/setting/utils';
 import CustomText from './CustomText';
 import DatePickerModal from './DatePicker';
 import CustomTimePicker from './TimePicker';
-import { t } from 'i18next';
+import en from '../locales/en.json';
 
 const CreateEvent = () => {
   const [, actions, select] = useStore();
   const {
-    task: { addTaskItem, setTask },
+    task: { addTaskItem, setTask }
   } = actions;
 
   const theme = select('setting.theme');
@@ -53,14 +55,14 @@ const CreateEvent = () => {
         toValue: 0,
         duration: 300,
         easing: Easing.out(Easing.ease),
-        useNativeDriver: true,
+        useNativeDriver: true
       }).start();
     } else {
       Animated.timing(translateY, {
         toValue: 500,
         duration: 250,
         easing: Easing.in(Easing.ease),
-        useNativeDriver: true,
+        useNativeDriver: true
       }).start(() => setIsVisible(false));
     }
   }, [visible]);
@@ -75,20 +77,20 @@ const CreateEvent = () => {
           date: {
             day: {
               label: date.toLocaleDateString('en-US', { weekday: 'short' }),
-              value: date.getDate(),
+              value: date.getDate()
             },
             month: {
               label: date.toLocaleDateString('en-US', { month: 'short' }),
-              value: date.getMonth() + 1,
+              value: date.getMonth() + 1
             },
             year: date.getFullYear(),
             dayWeek: {
               value: date.getDay(),
-              label: date.toLocaleDateString('en-US', { weekday: 'short' }),
-            },
-          },
+              label: date.toLocaleDateString('en-US', { weekday: 'short' })
+            }
+          }
         },
-        participants: [],
+        participants: []
       });
 
       setTitle('');
@@ -100,7 +102,7 @@ const CreateEvent = () => {
         toValue: 500,
         duration: 250,
         easing: Easing.in(Easing.ease),
-        useNativeDriver: true,
+        useNativeDriver: true
       }).start(() => setIsOpen());
     }
   };
@@ -122,13 +124,13 @@ const CreateEvent = () => {
             variant='bold'
             className={`mb-4 text-center text-xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
           >
-            {t('newTask')}
+            {p('addNewTask')}
           </CustomText>
 
           <View className='mb-4'>
             <TextInput
               className={`rounded-lg border p-3 text-lg ${theme === 'dark' ? 'border-gray-600 bg-cardDark text-textPrimaryDark' : 'border-gray-300 bg-cardLight text-textPrimaryLight'} `}
-              placeholder='Title'
+              placeholder={p('titlePlaceholder')}
               placeholderTextColor={theme === 'dark' ? '#9CA3AF' : '#6B7280'}
               value={title}
               onChangeText={setTitle}
@@ -138,7 +140,7 @@ const CreateEvent = () => {
           <View className='mb-4'>
             <TextInput
               className={`rounded-lg border p-3 text-lg ${theme === 'dark' ? 'border-gray-600 bg-cardDark text-textPrimaryDark' : 'border-gray-300 bg-cardLight text-textPrimaryLight'} `}
-              placeholder='Description'
+              placeholder={p('descriptionPlaceholder')}
               placeholderTextColor={theme === 'dark' ? '#9CA3AF' : '#6B7280'}
               value={description}
               onChangeText={setDescription}
@@ -151,14 +153,14 @@ const CreateEvent = () => {
               variant='semiBold'
               className={`${theme === 'dark' ? 'text-textPrimaryDark' : 'text-gray-700'} mb-2`}
             >
-              Date
+              {p('date')}
             </CustomText>
             <TouchableOpacity
-              className={`rounded-lg border p-3 ${theme === 'dark' ? 'border-textPrimaryDark' : 'border-textSecondaryLight'}`}
+              className={`rounded-lg border p-3 ${theme === 'dark' ? 'border-gray-600 bg-cardDark' : 'border-textSecondaryLight'}`}
               onPress={() => setShowDatePicker(true)}
             >
               <CustomText
-                className={theme === 'dark' ? `text-textPrimaryDark` : 'text-textPrimaryLight'}
+                className={theme === 'dark' ? 'text-[#9CA3AF]' : 'text-[#6B7280]'}
                 variant='regular'
               >
                 {date.toDateString()}
@@ -172,16 +174,13 @@ const CreateEvent = () => {
               variant='semiBold'
               className={`${theme === 'dark' ? 'text-textPrimaryDark' : 'text-gray-700'} mb-2`}
             >
-              Time
+              {p('time')}
             </CustomText>
             <TouchableOpacity
-              className={`rounded-lg border p-3 ${theme === 'dark' ? 'border-textPrimaryDark' : 'border-textSecondaryLight'}`}
+              className={`rounded-lg border p-3 ${theme === 'dark' ? 'border-gray-600 bg-cardDark' : 'border-textSecondaryLight'}`}
               onPress={() => setShowTimePicker(true)}
             >
-              <CustomText
-                className={theme === 'dark' ? `text-textPrimaryDark` : 'text-textPrimaryLight'}
-                variant='regular'
-              >
+              <CustomText className={theme === 'dark' ? 'text-[#9CA3AF]' : 'text-[#6B7280]'} variant='regular'>
                 {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </CustomText>
             </TouchableOpacity>
@@ -189,11 +188,12 @@ const CreateEvent = () => {
 
           {/* 🔥 Botão de Adicionar Tarefa */}
           <TouchableOpacity
-            className={`mt-4 items-center rounded-lg p-4 shadow-md active:opacity-80 ${getTailwindClass(accent, 'bg')}`}
+            className={`mt-4 flex flex-row items-center justify-center gap-2 rounded-lg p-4 shadow-md active:opacity-80 ${getTailwindClass(accent, 'bg')}`}
             onPress={handleAddEvent}
           >
+            <AntDesign name='plus' size={20} color='white' />
             <CustomText variant='bold' className='text-lg text-white'>
-              <AntDesign name='plus' size={28} color='white' /> Add Task
+              {p('addTask')}
             </CustomText>
           </TouchableOpacity>
 

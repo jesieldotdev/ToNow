@@ -15,6 +15,9 @@ const resources = {
   pt: { translation: pt },
 } as const;
 
+// 🔥 **Geramos automaticamente o tipo baseado no JSON**
+export type TranslationKeys = keyof typeof en;
+
 // **Função para obter o idioma inicial**
 const getStoredLanguage = (): AvailableLanguages => {
   const state = store.getState();
@@ -28,7 +31,7 @@ const getStoredLanguage = (): AvailableLanguages => {
   return deviceLocale.startsWith('pt') ? 'pt' : 'en';
 };
 
-// **Inicializando o i18n com tipagem**
+// **Inicializando o i18n**
 i18n.use(initReactI18next).init({
   resources,
   lng: getStoredLanguage(),
