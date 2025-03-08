@@ -3,10 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { stringify } from 'querystring';
 import colors from 'tailwindcss/colors';
 
-export const getDefaultSettingItem = () => {
-  {
-  }
-};
+
 
 export const accentColors: AccentColor[] = ['primary', 'secondary', 'third'];
 

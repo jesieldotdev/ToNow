@@ -15,39 +15,39 @@ import { cancelNotification, registerForPushNotificationsAsync } from 'store/set
 
 import Store from './store';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false
-  })
-});
+// Notifications.setNotificationHandler({
+//   handleNotification: async () => ({
+//     shouldShowAlert: true,
+//     shouldPlaySound: true,
+//     shouldSetBadge: false
+//   })
+// });
 
 export default function App() {
-  useEffect(() => {
-    async function setupNotifications() {
-      try {
-        await registerForPushNotificationsAsync();
+  // useEffect(() => {
+  //   async function setupNotifications() {
+  //     try {
+  //       await registerForPushNotificationsAsync();
 
-        const notificationSubscription = Notifications.addNotificationResponseReceivedListener(
-          (response) => {
-            try {
-              const notificationId = response.notification.request.identifier;
-              cancelNotification(notificationId);
-            } catch (e) {
-              console.warn('Erro ao cancelar notificação:', e);
-            }
-          }
-        );
+  //       const notificationSubscription = Notifications.addNotificationResponseReceivedListener(
+  //         (response) => {
+  //           try {
+  //             const notificationId = response.notification.request.identifier;
+  //             cancelNotification(notificationId);
+  //           } catch (e) {
+  //             console.warn('Erro ao cancelar notificação:', e);
+  //           }
+  //         }
+  //       );
 
-        return () => notificationSubscription.remove();
-      } catch (e) {
-        console.warn('Erro ao registrar notificações:', e);
-      }
-    }
+  //       return () => notificationSubscription.remove();
+  //     } catch (e) {
+  //       console.warn('Erro ao registrar notificações:', e);
+  //     }
+  //   }
 
-    setupNotifications();
-  }, []);
+  //   setupNotifications();
+  // }, []);
 
   return (
     <Store>

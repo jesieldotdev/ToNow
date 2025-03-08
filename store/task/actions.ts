@@ -87,6 +87,6 @@ export const filterTasks =
       setTask("items", [...currentTasks, newTask]); 
   
       
-      scheduleTaskNotification(newTask);
+      // scheduleTaskNotification(newTask);
     };
   
