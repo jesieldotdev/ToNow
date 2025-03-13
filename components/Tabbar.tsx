@@ -1,17 +1,23 @@
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { Link } from 'expo-router'; // Importe o Link do expo-router
+import { Link, usePathname, useRouter } from 'expo-router'; // Importe o Link do expo-router
 import useStore from 'hooks/useStore';
 import { User, Clock9Icon, Plus } from 'lucide-react-native';
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { getHexaColorTailwind } from 'store/setting/utils';
 
-interface TabBarProps extends BottomTabBarProps {}
+
+interface TabBarProps extends BottomTabBarProps { }
 
 const TabBar = () => {
   const state = 0
   const [, actions, select] = useStore();
+  const pathname = usePathname()
+
+  const isScheduleActive = pathname === '/schedule';
+  const isProfileActive = pathname === '/profile';
+
   const {
     task: { setTask }
   } = actions;
@@ -39,7 +45,7 @@ const TabBar = () => {
             size={24}
             style={{
               color:
-                state.index === 0
+                isScheduleActive
                   ? getHexaColorTailwind(accentColor)
                   : theme === 'dark'
                     ? '#4b5563'
@@ -65,7 +71,7 @@ const TabBar = () => {
             size={24}
             style={{
               color:
-                state.index !== 0
+                isProfileActive
                   ? getHexaColorTailwind(accentColor)
                   : theme === 'dark'
                     ? '#4b5563'

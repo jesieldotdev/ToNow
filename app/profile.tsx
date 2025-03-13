@@ -53,7 +53,7 @@ const ProfileScreen = () => {
   }
 
   return (
-    <View className={`flex-1 px-6 pt-12 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
+    <View className={`flex-1 px-6 pt-2 pb-8 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
       <CustomText
         variant='bold'
         className={`mb-6 text-2xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}

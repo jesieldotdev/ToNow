@@ -53,7 +53,7 @@ const Schedule = () => {
   }
 
   return (
-    <Container className='px-6 mt-8'>
+    <Container className='px-6 pt-2 flex-1'>
       <CustomText
         variant='medium'
         className={`text-lg ${theme === 'dark' ? 'text-textSecondaryDark' : 'text-textSecondaryLight'}`}
