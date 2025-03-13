@@ -1,6 +1,7 @@
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from 'components/CustomText';
+import { useRouter } from 'expo-router';
 import * as Updates from 'expo-updates';
 import { useTheme } from 'hooks/themeProvider';
 import useStore from 'hooks/useStore';
@@ -14,6 +15,7 @@ import { accentColors, getHexaColorTailwind, getTailwindClass } from 'store/sett
 
 const ProfileScreen = () => {
   const [, actions, select] = useStore();
+  const router = useRouter();
   const {
     setting: { setSetting, toggleTheme, changeLanguage },
   } = actions;
@@ -28,10 +30,7 @@ const ProfileScreen = () => {
 
   function handleLogout() {
     console.log('Usuário deslogado');
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Login' }],
-    });
+    router.push('/login');
   }
 
   function handleClearData() {

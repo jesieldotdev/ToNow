@@ -15,7 +15,7 @@ const TabBar = () => {
   const [, actions, select] = useStore();
   const pathname = usePathname()
 
-  const isScheduleActive = pathname === '/schedule';
+  const isScheduleActive = pathname === '/schedule' || pathname === '/';
   const isProfileActive = pathname === '/profile';
 
   const {

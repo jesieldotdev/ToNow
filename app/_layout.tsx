@@ -7,6 +7,7 @@ import { PaperProvider } from 'react-native-paper';
 import Store from 'store';
 import TabBar from 'components/Tabbar';
 import Schedule from './schedule';
+import { Container } from 'components/Container';
 
 export default function Layout() {
   return (
@@ -14,7 +15,9 @@ export default function Layout() {
       <SafeAreaView style={{ flex: 1 }}>
         <I18nextProvider i18n={i18n}>
           <PaperProvider>
-              <Slot/>
+            <Container >
+              <Slot />
+            </Container>
             <TabBar />
           </PaperProvider>
         </I18nextProvider>

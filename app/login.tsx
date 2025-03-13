@@ -1,5 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import CustomText from 'components/CustomText';
+import { useRouter } from 'expo-router';
 import useStore from 'hooks/useStore';
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
@@ -10,6 +11,7 @@ const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const router = useRouter();
   const [, actions, select] = useStore();
   const {
     setting: { setSetting },
@@ -23,7 +25,7 @@ const LoginScreen = ({ navigation }: any) => {
 
   function handleLogin() {
     setSetting('showTabBar', true);
-    navigation.navigate('Home');
+    router.push('/')
   }
 
   return (
