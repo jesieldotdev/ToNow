@@ -7,10 +7,10 @@ import { getTailwindClass } from 'store/setting/utils';
 import { sortTasks } from 'store/task/utils';
 import { useTranslation } from 'react-i18next';
 
-import { Container } from '../../components/Container';
-import CustomText from '../../components/CustomText';
-import { DayOfWeek } from '../../components/DayOfWeek';
-import EventItem from '../../components/EventItem';
+import { Container } from '../components/Container';
+import CustomText from '../components/CustomText';
+import { DayOfWeek } from '../components/DayOfWeek';
+import EventItem from '../components/EventItem';
 
 const Schedule = () => {
   const [, , select] = useStore();
@@ -53,7 +53,7 @@ const Schedule = () => {
   }
 
   return (
-    <Container className='px-6 pt-12'>
+    <Container className='px-6 mt-8'>
       <CustomText
         variant='medium'
         className={`text-lg ${theme === 'dark' ? 'text-textSecondaryDark' : 'text-textSecondaryLight'}`}

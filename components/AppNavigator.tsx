@@ -1,40 +1,22 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import TabBar from 'components/Tabbar';
-import useStore from 'hooks/useStore';
-import React from 'react';
-import LoginScreen from 'screens/Login';
-import ProfileScreen from 'screens/Profile';
-import RegisterScreen from 'screens/Register';
-import Schedule from 'screens/Schedule';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { View, Text } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNavigator() {
-  const [, actions, select] = useStore();
-  const theme = select('setting.theme');
-
-  const {
-    setting: { getBgHexa },
-  } = actions;
-
-  const MyDarkTheme = {
-    ...DarkTheme,
-    colors: {
-      ...DarkTheme.colors,
-      background: getBgHexa(),
-    },
-  };
+function HomeScreen() {
   return (
-    <NavigationContainer theme={theme === 'dark' ? MyDarkTheme : DefaultTheme}>
-      <Tab.Navigator
-        screenOptions={{ headerShown: false, animation: 'shift' }}
-        tabBar={(props) => <TabBar {...props} />}
-      >
-        <Tab.Screen name='Home' component={Schedule} />
-        <Tab.Screen name='Perfil' component={ProfileScreen} />
-        <Tab.Screen name='Login' component={LoginScreen} />
-        <Tab.Screen name='Register' component={RegisterScreen} />
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white' }}>
+      <Text>Home Screen</Text>
+    </View>
+  );
+}
+
+export default function TabNavigator() {
+  return (
+    <NavigationContainer theme={DefaultTheme}>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

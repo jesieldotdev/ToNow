@@ -1,5 +1,6 @@
 import { FontAwesome, AntDesign } from '@expo/vector-icons';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { Link } from 'expo-router'; // Importe o Link do expo-router
 import useStore from 'hooks/useStore';
 import { User, Clock9Icon, Plus } from 'lucide-react-native';
 import React from 'react';
@@ -8,10 +9,11 @@ import { getHexaColorTailwind } from 'store/setting/utils';
 
 interface TabBarProps extends BottomTabBarProps {}
 
-const TabBar = ({ navigation, state }: TabBarProps) => {
+const TabBar = () => {
+  const state = 0
   const [, actions, select] = useStore();
   const {
-    task: { setTask },
+    task: { setTask }
   } = actions;
 
   const theme = select('setting.theme');
@@ -29,21 +31,23 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
     <View
       className={`absolute bottom-0 left-0 right-0 flex-row items-center justify-around p-4 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'} rounded-t-2xl shadow-md`}
     >
-      {/* Botão Home */}
-      <TouchableOpacity className='p-4 px-6' onPress={() => navigation.navigate('Home')}>
-        <FontAwesome
-          name='clock-o'
-          size={24}
-          style={{
-            color:
-              state.index === 0
-                ? getHexaColorTailwind(accentColor)
-                : theme === 'dark'
-                  ? '#4b5563'
-                  : '#6B7280',
-          }}
-        />
-      </TouchableOpacity>
+      {/* Botão Home com Link para navegação */}
+      <Link href='/schedule' asChild>
+        <TouchableOpacity className='p-4 px-6'>
+          <FontAwesome
+            name='clock-o'
+            size={24}
+            style={{
+              color:
+                state.index === 0
+                  ? getHexaColorTailwind(accentColor)
+                  : theme === 'dark'
+                    ? '#4b5563'
+                    : '#6B7280'
+            }}
+          />
+        </TouchableOpacity>
+      </Link>
 
       {/* Botão de Adicionar */}
       <TouchableOpacity
@@ -53,21 +57,23 @@ const TabBar = ({ navigation, state }: TabBarProps) => {
         <AntDesign name='plus' size={28} color='white' />
       </TouchableOpacity>
 
-      {/* Botão Perfil */}
-      <TouchableOpacity className='p-4 px-6' onPress={() => navigation.navigate('Perfil')}>
-        <FontAwesome
-          name='user'
-          size={24}
-          style={{
-            color:
-              state.index !== 0
-                ? getHexaColorTailwind(accentColor)
-                : theme === 'dark'
-                  ? '#4b5563'
-                  : '#6B7280',
-          }}
-        />
-      </TouchableOpacity>
+      {/* Botão Perfil com Link (caso você queira descomentar) */}
+      <Link href='/profile' asChild>
+        <TouchableOpacity className='p-4 px-6'>
+          <FontAwesome
+            name='user'
+            size={24}
+            style={{
+              color:
+                state.index !== 0
+                  ? getHexaColorTailwind(accentColor)
+                  : theme === 'dark'
+                    ? '#4b5563'
+                    : '#6B7280'
+            }}
+          />
+        </TouchableOpacity>
+      </Link>
     </View>
   );
 };
