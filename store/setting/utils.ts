@@ -5,7 +5,7 @@ import colors from 'tailwindcss/colors';
 
 
 
-export const accentColors: AccentColor[] = ['primary', 'secondary', 'third'];
+export const accentColors: AccentColor[] = ['primary', 'secondary', 'third', 'fourth'];
 
 export async function registerForPushNotificationsAsync() {
   try {
@@ -50,6 +50,8 @@ export const getHexaColorTailwind = (accent: AccentColor) => {
       return colors.blue[500];
     case 'third':
       return colors.orange[500];
+    case 'fourth':
+      return colors.green[500];
   }
 };
 
@@ -60,6 +62,7 @@ export const getTailwindClass = (colorKey: string, type: 'text' | 'bg' | 'border
     primary: 'primary',
     secondary: 'secondary',
     third: 'third',
+    fourth: 'fourth',
   };
 
   return `${type}-${colorMapping[colorKey] || 'primary'}`;

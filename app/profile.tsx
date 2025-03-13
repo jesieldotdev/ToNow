@@ -17,7 +17,7 @@ const ProfileScreen = () => {
   const [, actions, select] = useStore();
   const router = useRouter();
   const {
-    setting: { setSetting, toggleTheme, changeLanguage },
+    setting: { setSetting, toggleTheme, changeLanguage, getBgHexa }
   } = actions;
   const { background, textPrimary } = useTheme();
 
@@ -46,13 +46,13 @@ const ProfileScreen = () => {
           setTimeout(() => {
             Updates.reloadAsync();
           }, 1000);
-        },
-      },
+        }
+      }
     ]);
   }
 
   return (
-    <View className={`flex-1 px-6 pt-2 pb-8 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
+    <View className={`flex-1 px-6 pb-8 pt-2 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
       <CustomText
         variant='bold'
         className={`mb-6 text-2xl ${theme === 'dark' ? 'text-textPrimaryDark' : 'text-textPrimaryLight'}`}
@@ -142,7 +142,7 @@ const ProfileScreen = () => {
           >
             {t('colorTheme')}
           </CustomText>
-          <View className='w-32 flex-row justify-between'>
+          <View className='w-32 flex-row justify-between gap-1'>
             {accentColors.map((color) => (
               <TouchableOpacity
                 key={color}
@@ -165,6 +165,10 @@ const ProfileScreen = () => {
       </TouchableOpacity>
 
       <TouchableOpacity
+        style={{
+          backgroundColor: getBgHexa(),
+          borderColor: theme === 'dark' ? '#4b5563' : '#d1d5db'
+        }}
         className='mt-6 flex-row items-center justify-center rounded-xl border p-4 shadow-lg'
         onPress={handleLogout}
       >

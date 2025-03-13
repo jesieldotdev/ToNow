@@ -1,4 +1,4 @@
-import { Slot, Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import '../global.css';
 import i18n from 'locales/i18n';
 import { I18nextProvider } from 'react-i18next';

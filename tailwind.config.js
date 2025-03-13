@@ -13,6 +13,7 @@ module.exports = {
     'text-primary-500',
     'text-secondary-500',
     'text-third-500',
+    'text-fourth-500',
     'bg-primary-500',
     'bg-secondary-500',
     'bg-third-500',
@@ -22,12 +23,15 @@ module.exports = {
     'text-primary',
     'text-secondary',
     'text-third',
+    'text-fourth',
     'bg-primary',
     'bg-secondary',
     'bg-third',
+    'bg-fourth',
     'border-primary',
     'border-secondary',
     'border-third',
+    'border-fourth',
     'textPrimaryLight',
     'textSecondaryLight',
     'textSecondaryDark',
@@ -41,6 +45,7 @@ module.exports = {
         primary: colors.rose[500], // Vermelho Rosado
         secondary: colors.blue[500], // Azul #3b82f6
         third: colors.orange[500], // Amarelo para melhor contraste
+        fourth: colors.green[500], // Amarelo para melhor contraste
         bgLight: colors.gray[100], // Tom neutro mais agradável
         bgDark: colors.gray[900], // Fundo escuro mais sólido
         textPrimaryLight: colors.gray[800], // Mantém um bom contraste

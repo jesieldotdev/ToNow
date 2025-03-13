@@ -9,7 +9,7 @@ type SettingState = {
 
 type SettingItem = object;
 
-type AccentColor = 'primary' | 'secondary' | 'third';
+type AccentColor = 'primary' | 'secondary' | 'third' | 'fourth';
 type Theme = 'dark' | 'light';
 
 type Palette = {
