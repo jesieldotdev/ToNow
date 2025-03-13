@@ -1,11 +1,10 @@
 import CreateEvent from 'components/CreateTodo';
-import { scheduleTaskNotification } from 'components/Notifications';
 import useStore from 'hooks/useStore';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { View, ScrollView } from 'react-native';
 import { getTailwindClass } from 'store/setting/utils';
 import { sortTasks } from 'store/task/utils';
-import { useTranslation } from 'react-i18next';
 
 import { Container } from '../components/Container';
 import CustomText from '../components/CustomText';
@@ -53,7 +52,7 @@ const Schedule = () => {
   }
 
   return (
-    <Container className='px-6 pt-2 flex-1'>
+    <Container className='flex-1 px-6 pt-2'>
       <CustomText
         variant='medium'
         className={`text-lg ${theme === 'dark' ? 'text-textSecondaryDark' : 'text-textSecondaryLight'}`}
@@ -73,7 +72,8 @@ const Schedule = () => {
       <ScrollView
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        className='relative pl-8' >
+        className='relative pl-8'
+      >
         <View
           className={`absolute bottom-32 left-[-12px] top-0 w-[2px] ${getTailwindClass(accent, 'bg')}`}
         />
