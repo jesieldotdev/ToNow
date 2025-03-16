@@ -1,4 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin'; // Importe a biblioteca GoogleSignin
 import CustomText from 'components/CustomText';
 import { useRouter } from 'expo-router';
 import useStore from 'hooks/useStore';
@@ -6,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getTailwindClass } from 'store/setting/utils';
-// import { GoogleSignin } from '@react-native-google-signin/google-signin'; // Importe a biblioteca GoogleSignin
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }: any) => {
   const router = useRouter();
   const [, actions, select] = useStore();
   const {
-    setting: { setSetting },
+    setting: { setSetting }
   } = actions;
   const theme = select('setting.theme'); // Obtém o tema do Redux
   const accent = select('setting.accentColor'); // Obtém o tema do Redux
@@ -35,11 +35,11 @@ const LoginScreen = ({ navigation }: any) => {
     // try {
     //   await GoogleSignin.hasPlayServices(); // Verifica se o dispositivo tem os serviços do Google Play
     //   const userInfo = await GoogleSignin.signIn(); // Realiza o login
-    //   console.log(userInfo);  // Aqui você pode usar as informações do usuário, como userInfo.idToken
-    //   setSetting('showTabBar', true);  // Exemplo de uso do estado de configuração
-    //   router.push('/');  // Navega para a próxima tela
+    //   console.log(userInfo); // Aqui você pode usar as informações do usuário, como userInfo.idToken
+    //   setSetting('showTabBar', true); // Exemplo de uso do estado de configuração
+    //   router.push('/'); // Navega para a próxima tela
     // } catch (error) {
-    //   console.log(error);  // Em caso de erro, você pode tratá-lo
+    //   console.log(error); // Em caso de erro, você pode tratá-lo
     // }
   };
 
@@ -102,7 +102,7 @@ const LoginScreen = ({ navigation }: any) => {
 
       {/* Botão de Login com Google */}
       <TouchableOpacity
-        className={`items-center rounded-lg p-4 mt-4 shadow-md active:opacity-80 bg-blue-500`}
+        className='mt-4 items-center rounded-lg bg-blue-500 p-4 shadow-md active:opacity-80'
         onPress={handleGoogleSignIn} // Chama a função de login do Google
       >
         <CustomText variant='bold' className='text-lg text-white'>
