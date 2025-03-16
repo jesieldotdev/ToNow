@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { View, TextInput, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getTailwindClass } from 'store/setting/utils';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin'; // Importe a biblioteca GoogleSignin
 
 const LoginScreen = ({ navigation }: any) => {
   const [email, setEmail] = useState('');
@@ -19,14 +20,28 @@ const LoginScreen = ({ navigation }: any) => {
   const theme = select('setting.theme'); // Obtém o tema do Redux
   const accent = select('setting.accentColor'); // Obtém o tema do Redux
 
-  useEffect(() => {
-    setSetting('showTabBar', false);
-  }, []);
+  // useEffect(() => {
+  //   setSetting('showTabBar', false);
+  // }, []);
 
+  // Função para lidar com o login
   function handleLogin() {
     setSetting('showTabBar', true);
-    router.push('/')
+    router.push('/');
   }
+
+  // Função para fazer login com o Google
+  const handleGoogleSignIn = async () => {
+    // try {
+    //   await GoogleSignin.hasPlayServices(); // Verifica se o dispositivo tem os serviços do Google Play
+    //   const userInfo = await GoogleSignin.signIn(); // Realiza o login
+    //   console.log(userInfo);  // Aqui você pode usar as informações do usuário, como userInfo.idToken
+    //   setSetting('showTabBar', true);  // Exemplo de uso do estado de configuração
+    //   router.push('/');  // Navega para a próxima tela
+    // } catch (error) {
+    //   console.log(error);  // Em caso de erro, você pode tratá-lo
+    // }
+  };
 
   return (
     <View className={`flex-1 px-6 pt-20 ${theme === 'dark' ? 'bg-bgDark' : 'bg-bgLight'}`}>
@@ -82,6 +97,16 @@ const LoginScreen = ({ navigation }: any) => {
       >
         <CustomText variant='bold' className='text-lg text-white'>
           Entrar
+        </CustomText>
+      </TouchableOpacity>
+
+      {/* Botão de Login com Google */}
+      <TouchableOpacity
+        className={`items-center rounded-lg p-4 mt-4 shadow-md active:opacity-80 bg-blue-500`}
+        onPress={handleGoogleSignIn} // Chama a função de login do Google
+      >
+        <CustomText variant='bold' className='text-lg text-white'>
+          Entrar com Google
         </CustomText>
       </TouchableOpacity>
 

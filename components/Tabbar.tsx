@@ -3,23 +3,23 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Link, usePathname, useRouter } from 'expo-router'; // Importe o Link do expo-router
 import useStore from 'hooks/useStore';
 import { User, Clock9Icon, Plus } from 'lucide-react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { getHexaColorTailwind } from 'store/setting/utils';
 
-
-interface TabBarProps extends BottomTabBarProps { }
+interface TabBarProps extends BottomTabBarProps {}
 
 const TabBar = () => {
-  const state = 0
+  const state = 0;
   const [, actions, select] = useStore();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const isScheduleActive = pathname === '/schedule' || pathname === '/';
   const isProfileActive = pathname === '/profile';
 
   const {
-    task: { setTask }
+    task: { setTask },
+    setting: { setSetting }
   } = actions;
 
   const theme = select('setting.theme');
@@ -30,6 +30,13 @@ const TabBar = () => {
   function handleAdd() {
     setTask('taskModalTable', !isOpen);
   }
+
+  useEffect(() => {
+    if (pathname === '/login' || pathname === '/register') setSetting('showTabBar', false);
+    else {
+      setSetting('showTabBar', true);
+    }
+  }, [pathname]);
 
   if (!showTab) return null;
 
@@ -44,12 +51,11 @@ const TabBar = () => {
             name='clock-o'
             size={24}
             style={{
-              color:
-                isScheduleActive
-                  ? getHexaColorTailwind(accentColor)
-                  : theme === 'dark'
-                    ? '#4b5563'
-                    : '#6B7280'
+              color: isScheduleActive
+                ? getHexaColorTailwind(accentColor)
+                : theme === 'dark'
+                  ? '#4b5563'
+                  : '#6B7280'
             }}
           />
         </TouchableOpacity>
@@ -70,12 +76,11 @@ const TabBar = () => {
             name='user'
             size={24}
             style={{
-              color:
-                isProfileActive
-                  ? getHexaColorTailwind(accentColor)
-                  : theme === 'dark'
-                    ? '#4b5563'
-                    : '#6B7280'
+              color: isProfileActive
+                ? getHexaColorTailwind(accentColor)
+                : theme === 'dark'
+                  ? '#4b5563'
+                  : '#6B7280'
             }}
           />
         </TouchableOpacity>
