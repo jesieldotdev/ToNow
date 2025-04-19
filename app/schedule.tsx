@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, ScrollView } from 'react-native';
 import { getTailwindClass } from 'store/setting/utils';
-import { sortTasks } from 'store/task/utils';
+import { defaultTaskExamples, sortTasks } from 'store/task/utils';
 
 import { Container } from '../components/Container';
 import CustomText from '../components/CustomText';
@@ -76,6 +76,22 @@ const Schedule = () => {
       >
         <View
           className={`absolute bottom-32 left-[-12px] top-0 w-[2px] ${getTailwindClass(accent, 'bg')}`}
+        />
+
+        <EventItem
+          time={defaultTaskExamples()[0].time}
+          title={defaultTaskExamples()[0].title}
+          description={defaultTaskExamples()[0].description}
+          isHighlighted={isHighlighted(defaultTaskExamples()[0])}
+          participants={defaultTaskExamples()[0]?.participants}
+        />
+
+        <EventItem
+          time={defaultTaskExamples()[2].time}
+          title={defaultTaskExamples()[2].title}
+          description={defaultTaskExamples()[2].description}
+          isHighlighted={isHighlighted(defaultTaskExamples()[2])}
+          participants={defaultTaskExamples()[2]?.participants}
         />
 
         {filteredTasks.length > 0 ? (
