@@ -3,6 +3,7 @@ import { useTheme } from 'hooks/themeProvider';
 import useStore from 'hooks/useStore';
 import React, { useEffect } from 'react';
 import { View, StatusBar } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 
 export const Container = ({
   children,
@@ -31,6 +32,7 @@ export const Container = ({
 
   return (
     <View className={`${background} ${className}`}>
+
       <StatusBar />
       {children}
     </View>
